@@ -1,0 +1,147 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JobOS · Careers Finder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FAFAF7;--card:#FFFFFF;--ink:#1F2430;--mute:#5B6475;--line:#ECEAF2;--lav:#EDE9FE;--lav-i:#5B47C7;--mint:#DDF6E8;--mint-i:#1D6B45;--peach:#FFE9DC;--peach-i:#A3461F;--sky:#E1F1FC;--sky-i:#1D5F92;--rose:#FDE7EC;--rose-i:#A3324F;
+--sh:0 1px 2px rgba(31,36,48,.04),0 4px 16px rgba(31,36,48,.05);--r:14px}
+*{box-sizing:border-box}html,body{margin:0}body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit}button,input{font:inherit;color:inherit}
+.top{position:sticky;top:0;z-index:5;background:rgba(250,250,247,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .in{max-width:1240px;margin:auto;padding:16px 24px;display:flex;align-items:center;gap:16px}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.2px}.brand span{color:var(--lav-i)}.muted{color:var(--mute)}.sm{font-size:13px}.xs{font-size:12px}
+.grow{flex:1}
+.btn{border:0;border-radius:10px;padding:8px 16px;font-weight:600;cursor:pointer;transition:background .15s,transform .15s,box-shadow .15s}
+.btn:active{transform:translateY(1px)}.btn.pri{background:var(--lav-i);color:#fff}.btn.pri:hover{background:#4C3AB0}.btn.sec{background:var(--card);box-shadow:var(--sh)}.btn.sec:hover{background:#F4F2FA}
+.btn:disabled{opacity:.55;cursor:default}
+.wrap{max-width:1240px;margin:auto;padding:24px;display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start}
+@media(max-width:900px){.wrap{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:24px}
+h1{font-size:24px;line-height:32px;margin:0 0 4px;font-weight:700;letter-spacing:-.3px}h2{font-size:16px;margin:0 0 16px;font-weight:600}
+label.f{display:block;font-size:13px;font-weight:500;color:var(--mute);margin:16px 0 8px}
+.inp{width:100%;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#FCFCFD;outline:none;transition:border .15s,box-shadow .15s}
+.inp:focus{border-color:#BDB2F2;box-shadow:0 0 0 3px var(--lav)}
+.seg{display:flex;background:#F3F2F7;border-radius:10px;padding:4px;gap:4px}.seg button{flex:1;border:0;background:none;border-radius:8px;padding:6px 8px;font-size:13px;font-weight:500;cursor:pointer;color:var(--mute)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+.checks{display:flex;flex-wrap:wrap;gap:8px}.ck{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:99px;background:#F3F2F7;font-size:13px;cursor:pointer;user-select:none;transition:background .15s}
+.ck.on{background:var(--lav);color:var(--lav-i);font-weight:600}
+.tog{display:flex;align-items:center;justify-content:space-between;margin-top:16px;font-size:14px}.sw{width:36px;height:20px;border-radius:99px;background:#DCD9E6;position:relative;cursor:pointer;transition:background .2s;flex:none}
+.sw:after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 2px rgba(0,0,0,.15)}.sw.on{background:var(--lav-i)}.sw.on:after{left:18px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:600;line-height:20px}
+.c-lav{background:var(--lav);color:var(--lav-i)}.c-mint{background:var(--mint);color:var(--mint-i)}.c-peach{background:var(--peach);color:var(--peach-i)}.c-sky{background:var(--sky);color:var(--sky-i)}.c-rose{background:var(--rose);color:var(--rose-i)}.c-gray{background:#F1F1F4;color:var(--mute)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:24px 0 0}@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}.srcrow{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.stat{background:var(--card);border-radius:12px;box-shadow:var(--sh);padding:12px 16px;min-width:120px}.stat b{display:block;font-size:20px;line-height:28px}
+.bar{display:flex;gap:8px;align-items:center;margin:24px 0 16px;flex-wrap:wrap}
+.list{display:flex;flex-direction:column;gap:16px}
+.job{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px 24px;transition:box-shadow .2s,transform .2s;animation:fade .35s ease both}
+.job:hover{box-shadow:0 2px 4px rgba(31,36,48,.05),0 8px 24px rgba(31,36,48,.08)}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.job .row1{display:flex;gap:16px;align-items:flex-start}.job h3{margin:0;font-size:16px;line-height:24px;font-weight:600}
+.meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.score{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:700;font-size:15px}
+.apply{flex:none;text-decoration:none;background:var(--ink);color:#fff;padding:8px 16px;border-radius:10px;font-weight:600;font-size:14px;transition:background .15s}.apply:hover{background:#3A4152}
+details{margin-top:12px}summary{cursor:pointer;font-size:13px;font-weight:500;color:var(--lav-i);list-style:none;user-select:none}summary::-webkit-details-marker{display:none}
+summary:before{content:"›";display:inline-block;margin-right:6px;transition:transform .2s}details[open] summary:before{transform:rotate(90deg)}
+.why{margin-top:8px;padding:16px;background:#FAF9FD;border-radius:12px;font-size:13px;display:grid;gap:8px}
+.why .r{display:flex;gap:8px}.why .pt{flex:none;width:36px;font-weight:600;color:var(--mint-i)}.why .pt.neg{color:var(--rose-i)}
+.skel{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:24px}.sk{height:12px;border-radius:6px;background:linear-gradient(90deg,#F1F0F5,#F8F7FB,#F1F0F5);background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+.empty{text-align:center;padding:48px 24px}.empty .ic{width:56px;height:56px;border-radius:16px;margin:0 auto 16px;display:grid;place-items:center;font-size:24px;background:var(--lav)}
+.prog{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.step{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:#F3F2F7;font-size:13px;color:var(--mute);transition:background .2s,color .2s}
+.step.on{color:var(--ink);background:#fff;box-shadow:var(--sh)}.step.done{color:var(--mint-i);background:var(--mint)}
+.pulse{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.5}.step.on .pulse{animation:pu 1s infinite}@keyframes pu{50%{opacity:1;transform:scale(1.3)}}
+.lives{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px}.live{border-radius:12px;overflow:hidden;box-shadow:var(--sh);background:#fff}.live iframe{width:100%;aspect-ratio:16/10;border:0;display:block;background:#F3F2F7}
+.live .cap{padding:8px 12px;font-size:12px;color:var(--mute);display:flex;gap:8px;align-items:center}
+.log{max-height:96px;overflow:hidden;font-size:12px;color:var(--mute);margin-top:16px;display:grid;gap:4px;background:var(--card);border-radius:12px;box-shadow:var(--sh);padding:12px 16px;-webkit-mask-image:linear-gradient(#000 60%,transparent)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
+.menu{position:relative}.menu .dd{position:absolute;right:0;top:44px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(31,36,48,.12);padding:8px;display:none;min-width:160px}.menu.open .dd{display:block}
+.dd a{display:block;padding:8px 12px;border-radius:8px;text-decoration:none;font-size:14px}.dd a:hover{background:#F4F2FA}
+</style></head><body>
+<div class="top"><div class="in"><div class="brand">Job<span>OS</span> <span class="muted sm" style="font-weight:500">· Careers Finder</span></div><div class="grow"></div>
+<span class="sm muted" id="fresh">Not run yet</span>
+<button class="btn sec" id="refresh" title="Re-check every saved listing is still live">↻ Refresh</button>
+<div class="menu" id="menu"><button class="btn sec" onclick="this.parentNode.classList.toggle('open')">Export ▾</button><div class="dd"><a href="/api/export.csv">CSV</a><a href="/api/export.json">JSON</a></div></div>
+</div></div>
+<div class="wrap">
+<aside class="card" id="prefs"><h2>Your preferences</h2>
+ <label class="f" for="role">Role</label><input class="inp" id="role" value="ML / SWE" placeholder="e.g. ML / SWE, data analyst">
+ <label class="f" for="locs">Locations</label><input class="inp" id="locs" value="India, Remote" placeholder="India, Bengaluru, Remote">
+ <label class="f" for="kw">Keywords <span class="xs">(boost)</span></label><input class="inp" id="kw" value="python" placeholder="python, pytorch">
+ <label class="f" for="ex">Exclude</label><input class="inp" id="ex" value="" placeholder="sales, recruiter">
+ <label class="f">Type</label><div class="seg" id="type"><button data-v="internship" class="on">Internship</button><button data-v="full-time">Full-time</button><button data-v="both">Both</button></div>
+ <label class="f">Seniority</label><div class="checks" id="sen"><span class="ck on" data-v="intern">Intern</span><span class="ck on" data-v="entry">Entry</span><span class="ck" data-v="mid">Mid</span><span class="ck" data-v="senior">Senior</span></div>
+ <div class="tog"><span>Needs visa sponsorship<br><span class="xs muted">for roles outside India</span></span><span class="sw" id="visa" role="switch" tabindex="0"></span></div>
+ <div class="tog"><span>Search Workday portals<br><span class="xs muted">TinyFish Agent · cached 24h</span></span><span class="sw on" id="agent" role="switch" tabindex="0"></span></div>
+ <button class="btn pri" id="go" style="width:100%;margin-top:24px;padding:12px">Find openings</button>
+ <p class="xs muted" style="margin:16px 0 0">Sources: 22 company job boards (Greenhouse, Lever, Ashby), Google Careers, NVIDIA &amp; Walmart Workday, plus TinyFish Search across ATS sites. Naukri and Internshala are excluded because their robots.txt disallows crawling.</p>
+</aside>
+<main>
+ <h1>Openings that match you</h1><div class="muted sm" id="sub">Set your preferences and press <b>Find openings</b>. Results are deduplicated across sources and checked to be live.</div>
+ <div class="prog" id="prog" hidden></div>
+ <div class="stats" id="stats"></div>
+ <div id="livewrap" hidden><div class="lives" id="lives"></div><div class="log" id="log"></div></div>
+ <div class="bar" id="bar" hidden><input class="inp" id="q" placeholder="Filter results…" style="max-width:280px"><span class="ck" id="newonly">New only</span>
+  <div class="grow"></div><div class="seg" id="sort" style="width:220px"><button data-v="score" class="on">Best match</button><button data-v="new">Newest</button></div></div>
+ <div class="list" id="list"><div class="card empty"><div class="ic">✦</div><b>No search yet</b><div class="muted sm" style="margin-top:8px">Your matched internships and jobs will appear here, with apply links.</div></div></div>
+</main></div><div class="toast" id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SRC={"boards (ATS APIs)":["mint","Company boards"],"TinyFish Search":["sky","TinyFish Search"],"TinyFish Fetch: Google Careers":["peach","Google Careers · Fetch"],"TinyFish Agent: Workday":["lav","Workday · Agent"]};
+let DATA=[],STATS={},sortBy='score',newOnly=false;
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200)};
+document.querySelectorAll('.seg').forEach(s=>s.onclick=e=>{if(e.target.tagName!='BUTTON')return;s.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b==e.target));if(s.id=='sort'){sortBy=e.target.dataset.v;render()}});
+document.querySelectorAll('#sen .ck').forEach(c=>c.onclick=()=>c.classList.toggle('on'));
+document.querySelectorAll('.sw').forEach(s=>{s.onclick=()=>s.classList.toggle('on');s.onkeydown=e=>{if(e.key==' '||e.key=='Enter'){e.preventDefault();s.click()}}});
+$('#newonly').onclick=()=>{newOnly=!newOnly;$('#newonly').classList.toggle('on',newOnly);render()};$('#q').oninput=()=>render();
+document.addEventListener('click',e=>{if(!$('#menu').contains(e.target))$('#menu').classList.remove('open')});
+const ago=t=>{if(!t)return'';const s=(Date.now()/1000-t);return s<60?'just now':s<3600?Math.round(s/60)+' min ago':Math.round(s/3600)+' h ago'};
+const list=v=>v.split(',').map(x=>x.trim()).filter(Boolean);
+function prefs(){return{role:$('#role').value,locations:list($('#locs').value),keywords:list($('#kw').value),exclude:list($('#ex').value),
+ job_type:$('#type .on').dataset.v,seniority:[...document.querySelectorAll('#sen .ck.on')].map(c=>c.dataset.v),needs_sponsorship:$('#visa').classList.contains('on'),use_agent:$('#agent').classList.contains('on')}}
+function skel(){$('#list').innerHTML=Array.from({length:4},()=>`<div class="skel"><div class="sk" style="width:45%;height:16px"></div><div class="sk" style="width:30%;margin-top:12px"></div><div class="sk" style="width:60%;margin-top:12px"></div></div>`).join('')}
+const STEPS=[["boards","Company boards"],["search","Search · discover"],["fetch","Fetch · read & verify"],["agent","Agent · Workday filters"],["dedupe","Dedupe & rank"]];
+function prog(state){$('#prog').hidden=false;$('#prog').innerHTML=STEPS.map(([k,l])=>`<span class="step ${state[k]||''}"><span class="pulse"></span>${l}</span>`).join('')}
+function statsView(){const s=STATS;if(!s.raw){$('#stats').innerHTML='';return}
+ const src=Object.entries(s.per_source||{}).map(([k,v])=>`<span class="chip c-${(SRC[k]||['gray'])[0]}">${(SRC[k]||[0,k])[1]} · ${v}</span>`).join(' ');
+ $('#stats').innerHTML=`<div class="stat"><b>${s.final}</b><span class="xs muted">matched listings</span></div><div class="stat"><b>${s.new_since_last_run}</b><span class="xs muted">new since last run</span></div>
+ <div class="stat"><b>${s.url_duplicates+s.canonical_duplicates}</b><span class="xs muted">duplicates merged</span></div><div class="stat"><b>${s.dead_filtered}</b><span class="xs muted">dead links removed</span></div>
+ <div class="srcrow"><span class="xs muted">Scanned ${s.raw.toLocaleString()} live openings from</span>${src}</div>`}
+function card(x){const sc=x.score,cl=sc>=85?'c-mint':sc>=70?'c-sky':'c-peach';
+ const srcs=x.sources.map(s=>`<span class="chip c-${(SRC[s]||['gray'])[0]}" style="font-weight:500">${(SRC[s]||[0,s])[1]}</span>`).join(' ');
+ const why=(x.why||[]).map(([p,t])=>`<div class="r"><span class="pt ${p.startsWith('-')?'neg':''}">${esc(p)}</span><span>${esc(t)}</span></div>`).join('');
+ return `<article class="job"><div class="row1"><div class="score ${cl}" title="match score">${sc}</div><div class="grow">
+ <h3>${esc(x.title)}</h3><div class="muted sm">${esc(x.company)} · ${esc(x.location||'Location on page')}</div>
+ <div class="meta"><span class="chip ${x.job_type=='internship'?'c-lav':'c-gray'}">${x.job_type=='internship'?'Internship':'Full-time'}</span>${x.job_type=='internship'?'':`<span class="chip c-gray">${esc(x.seniority)}</span>`}
+ ${x.remote?'<span class="chip c-sky">Remote</span>':''}${x.new?'<span class="chip c-peach">New</span>':''}
+ <span class="xs muted">${x.live?'✓ verified live '+ago(x.last_verified):'not yet verified'}</span></div></div>
+ <a class="apply" href="${esc(x.url)}" target="_blank" rel="noopener">Apply ↗</a></div>
+ <details><summary>Why this match</summary><div class="why">${why}
+ <div class="r"><span class="pt">src</span><span>${srcs}${x.alt_urls?` <span class="xs muted">· also at ${x.alt_urls.map(u=>`<a href="${esc(u)}" target="_blank">${esc(new URL(u).host)}</a>`).join(', ')}</span>`:''}</span></div>
+ <div class="r"><span class="pt">live</span><span class="muted">${esc(x.live_evidence)}</span></div>
+ <div class="r"><span class="pt">AI</span><span><button class="btn sec xs" style="padding:4px 12px" onclick="explain('${x.key}',this)">Explain with Gemini</button></span></div></div></details></article>`}
+function render(){const q=$('#q').value.toLowerCase();let v=DATA.filter(x=>(!newOnly||x.new)&&(!q||(x.title+x.company+x.location).toLowerCase().includes(q)));
+ v.sort(sortBy=='new'?(a,b)=>(b.first_seen-a.first_seen)||(b.score-a.score):(a,b)=>b.score-a.score);statsView();$('#bar').hidden=!DATA.length;
+ $('#list').innerHTML=v.length?v.map(card).join(''):DATA.length?`<div class="card empty"><div class="ic">⌕</div><b>No listings match this filter</b><div class="muted sm" style="margin-top:8px">Clear the filter or turn off “New only”.</div></div>`:
+ `<div class="card empty"><div class="ic">○</div><b>Nothing matched your preferences</b><div class="muted sm" style="margin-top:8px">Try adding “Remote”, widening seniority, or choosing “Both” for type.</div></div>`}
+function err(m){$('#list').innerHTML=`<div class="card empty"><div class="ic" style="background:var(--rose)">!</div><b>Something went wrong</b><div class="muted sm" style="margin-top:8px">${esc(m)}</div><button class="btn sec" style="margin-top:16px" onclick="$('#go').click()">Try again</button></div>`}
+function fresh(d){$('#fresh').textContent=d.last_refresh?`Checked ${ago(d.last_refresh)} · auto every ${d.refresh_minutes/60}h`:DATA.length?`Updated ${ago(Math.max(...DATA.map(x=>x.last_verified||0)))} · auto every ${d.refresh_minutes/60}h`:'Not run yet'}
+async function load(){const d=await (await fetch('/api/listings')).json();DATA=d.listings||[];STATS=d.stats||{};fresh(d);if(DATA.length){render();$('#sub').textContent='Deduplicated across sources and checked to be live. Click “Why this match” to see the reasoning.'}}
+$('#go').onclick=async()=>{$('#go').disabled=true;$('#go').textContent='Searching…';$('#fresh').textContent='Checking sources…';DATA=[];STATS={};statsView();skel();$('#bar').hidden=true;$('#lives').innerHTML='';$('#log').innerHTML='';
+ const st={boards:'on',search:'on',fetch:'on'};if(prefs().use_agent)st.agent='on';prog(st);
+ try{const r=await (await fetch('/api/find',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(prefs())})).json();
+ const es=new EventSource(`/api/job/${r.id}/stream`);es.onmessage=async m=>{const e=JSON.parse(m.data);
+  if(e.stage=='eof'){es.close();$('#go').disabled=false;$('#go').textContent='Find openings';return}
+  if(e.stage=='live'){$('#livewrap').hidden=false;$('#lives').insertAdjacentHTML('beforeend',`<div class="live"><iframe src="${esc(e.data.streaming_url)}" title="live browser"></iframe><div class="cap"><span class="dot" style="background:var(--lav-i)"></span>${esc(e.data.company)} · TinyFish Agent live</div></div>`)}
+  if(['agent','search','fetch','error'].includes(e.stage)){$('#livewrap').hidden=false;$('#log').insertAdjacentHTML('afterbegin',`<div>${e.t}s · ${esc(e.msg)}</div>`)}
+  if(e.stage=='search')st.search='done';if(e.stage=='fetch'&&e.msg.startsWith('Fetch read'))st.fetch='done';if(e.stage=='plan'){st.boards='done';st.search='done';st.agent=st.agent&&'done';st.dedupe='on'}
+  if(e.stage=='agent'&&/Agent applied|cache/.test(e.msg))st.agent='done';prog(st);
+  if(e.stage=='error'&&!DATA.length&&/Error|Exception/.test(e.msg))err(e.msg);
+  if(e.stage=='partial'){st.dedupe='done';prog(st);await load();toast(e.msg)}
+  if(e.stage=='done'){Object.keys(st).forEach(k=>st[k]='done');st.dedupe='done';prog(st);await load();setTimeout(()=>$('#livewrap').hidden=true,1500);toast(e.msg)}}}
+ catch(x){err(x.message);$('#go').disabled=false;$('#go').textContent='Find openings'}};
+$('#refresh').onclick=async()=>{const b=$('#refresh');b.disabled=true;b.textContent='Checking…';const r=await (await fetch('/api/refresh',{method:'POST'})).json();
+ const t=setInterval(async()=>{const j=await (await fetch('/api/job/'+r.id)).json();if(j.done){clearInterval(t);b.disabled=false;b.textContent='↻ Refresh';const e=j.events.at(-1);toast(e.msg);await load()}},1500)};
+async function explain(k,btn){btn.disabled=true;btn.textContent='Thinking…';const r=await (await fetch('/api/explain/'+k,{method:'POST'})).json();
+ btn.parentNode.innerHTML=`<span>${esc(r.summary)}${(r.tips||[]).map(t=>`<br>• ${esc(t)}`).join('')}</span>`}
+load();
+</script></body></html>

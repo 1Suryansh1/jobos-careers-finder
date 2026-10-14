@@ -1,0 +1,10 @@
+.env
+.venv/
+node_modules/
+data/*.db
+data/*.jsonl
+logs/
+__pycache__/
+*.pyc
+.pytest_cache/
+docs_ref/llms-full.txt

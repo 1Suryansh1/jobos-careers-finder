@@ -1,0 +1,121 @@
+<!doctype html><html><head><meta charset="utf-8"><title>JobOS · verified job hunting on TinyFish</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--bg:#0b0f17;--p:#121826;--p2:#1a2234;--b:#253048;--t:#e6ecf5;--m:#8b97ad;--g:#22c55e;--r:#ef4444;--y:#f59e0b;--c:#38bdf8;--v:#a78bfa}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 Inter,system-ui,sans-serif;background:radial-gradient(1200px 600px at 10% -10%,#16213a,transparent),var(--bg);color:var(--t)}
+header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--b)}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.5px}.logo b{color:var(--c)}.sub{color:var(--m);font-size:12px}
+.pill{padding:3px 9px;border-radius:99px;background:var(--p2);border:1px solid var(--b);font-size:12px;color:var(--m)}
+main#tab-hunt{display:grid;grid-template-columns:1fr 380px;gap:16px;padding:16px 22px}
+.card{background:var(--p);border:1px solid var(--b);border-radius:14px;padding:14px}
+input,button{font:inherit;color:var(--t);background:var(--p2);border:1px solid var(--b);border-radius:9px;padding:9px 12px}
+button{cursor:pointer;background:linear-gradient(135deg,#2563eb,#7c3aed);border:0;font-weight:600}button.ghost{background:var(--p2);border:1px solid var(--b)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
+.stage{background:var(--p2);border:1px solid var(--b);border-radius:12px;padding:10px;position:relative;transition:.3s}
+.stage .n{font-size:22px;font-weight:800}.stage .l{font-size:11px;color:var(--m);text-transform:uppercase;letter-spacing:.6px}
+.stage.on{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 0 24px #38bdf833}
+.stage:not(:last-child):after{content:"→";position:absolute;right:-12px;top:38%;color:var(--m)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.job{background:var(--p2);border:1px solid var(--b);border-radius:12px;padding:12px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.job:hover{border-color:var(--c)}.job h4{margin:0 0 4px;font-size:14px}.job .co{color:var(--m);font-size:12px}
+.chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:600;margin-right:4px}
+.s-open,.s-apply{background:#22c55e22;color:var(--g)}.s-closed{background:#ef444422;color:var(--r)}.s-stretch{background:#f59e0b22;color:var(--y)}.s-skip{background:#64748b33;color:#cbd5e1}
+.s-resolving,.s-queued{background:#38bdf822;color:var(--c)}.s-error{background:#ef444422;color:var(--r)}
+.tier{font-size:10px;padding:1px 6px;border-radius:5px;border:1px solid var(--b);color:var(--m);margin-right:3px}
+.tier.ats_api{color:var(--g);border-color:#22c55e55}.tier.fetch{color:var(--c);border-color:#38bdf855}.tier.agent{color:var(--v);border-color:#a78bfa55}
+.bar{height:5px;background:#0006;border-radius:3px;overflow:hidden;margin-top:3px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g))}
+.fit{position:absolute;right:10px;top:10px;width:46px;height:46px}
+.closed{opacity:.55}.closed h4{text-decoration:line-through}
+.trace{max-height:calc(100vh - 140px);overflow:auto;font-size:12.5px}
+.ev{padding:6px 8px;border-left:2px solid var(--b);margin-left:6px;position:relative}
+.ev:before{content:"";position:absolute;left:-6px;top:11px;width:10px;height:10px;border-radius:50%;background:var(--b)}
+.ev .t{color:var(--m);font-size:11px;margin-right:6px;font-variant-numeric:tabular-nums}.ev .st{font-weight:700;font-size:10px;text-transform:uppercase;margin-right:6px}
+.ev.tier:before{background:var(--c)}.ev.agent:before{background:var(--v)}.ev.ghost:before,.ev.error:before{background:var(--r)}.ev.score:before{background:var(--g)}.ev.crosscheck:before{background:var(--y)}.ev.decide:before{background:var(--y)}
+.ev.ghost .st,.ev.error .st{color:var(--r)}.ev.crosscheck .st,.ev.decide .st{color:var(--y)}.ev.score .st{color:var(--g)}.ev.agent .st{color:var(--v)}.ev.tier .st{color:var(--c)}
+.live{border-radius:10px;overflow:hidden;border:1px solid var(--v);background:#000;aspect-ratio:16/10;margin-top:8px}.live iframe{width:100%;height:100%;border:0}
+.livegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:10px}
+#drawer{position:fixed;inset:0 0 0 auto;width:min(760px,100%);background:var(--p);border-left:1px solid var(--b);transform:translateX(100%);transition:.3s;overflow:auto;padding:20px;z-index:9}
+#drawer.open{transform:none}.q{background:var(--p2);border-left:3px solid var(--c);padding:6px 10px;border-radius:6px;margin:4px 0;font-size:12.5px}
+.reason{padding:8px;border:1px solid var(--b);border-radius:9px;margin:6px 0}.reason .ok{color:var(--g)}.reason .bad{color:var(--r)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}td,th{border-bottom:1px solid var(--b);padding:5px;text-align:left}
+.tabs button{background:none;border:0;color:var(--m)}.tabs button.a{color:var(--t);border-bottom:2px solid var(--c);border-radius:0}
+.big{font-size:28px;font-weight:800}.k{color:var(--m);font-size:11px;text-transform:uppercase}
+main{padding:16px 22px}[hidden]{display:none!important}</style></head><body>
+<header><div><div class="logo">Job<b>OS</b></div><div class="sub">Verified job hunting · every fact has a source, a confidence and a live browser</div></div>
+<div class="tabs row" style="margin-left:24px"><button class="a" data-tab="hunt">Hunt</button><button data-tab="bench">Benchmark</button></div>
+<div style="flex:1"></div><span class="pill" id="wallet">wallet …</span><span class="pill" id="health">…</span></header>
+<main id="tab-hunt"><section>
+ <div class="card"><div class="row"><input id="role" value="backend engineer python" style="flex:1"><input id="loc" value="remote" style="width:140px">
+ <input id="limit" type="number" value="12" style="width:70px"><label class="sub"><input type="checkbox" id="needform" checked> read Workday forms (Agent)</label>
+ <button id="go">Hunt across ATS portals</button></div>
+ <div class="sub" style="margin-top:6px">Candidate: <b id="cand"></b> · resolution order: <span class="tier">cache</span><span class="tier ats_api">ATS API</span><span class="tier fetch">TinyFish Fetch</span><span class="tier agent">TinyFish Agent</span></div>
+ <div class="pipe" id="pipe"></div></div>
+ <div class="card" style="margin-top:12px" id="livebox" hidden><div class="row"><b>Live TinyFish browsers</b><span class="sub">streaming_url from run-sse, embedded per docs</span></div><div class="livegrid" id="lives"></div></div>
+ <div class="grid" id="jobs" style="margin-top:12px"></div>
+</section><aside class="card"><div class="row"><b>Reasoning trace</b><span class="sub" id="elapsed"></span></div><div class="trace" id="trace"><div class="sub">Start a hunt to see every decision and why it was made.</div></div></aside></main>
+<main id="tab-bench" hidden><div class="card" id="benchbox">loading…</div></main>
+<div id="drawer"></div>
+<script>
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let HUNT=null, jobs={}, counts={}, lives={};
+const STAGES=[["discover","Discovered"],["resolve","Resolved"],["ghost","Ghost / stale"],["live","Live & verified"],["score","Scored (Gemini)"],["apply","Apply-ready"]];
+function pipe(){$('#pipe').innerHTML=STAGES.map(([k,l])=>`<div class="stage ${counts[k]?'on':''}"><div class="n">${counts[k]||0}</div><div class="l">${l}</div></div>`).join('')}
+pipe();
+fetch('/api/profile').then(r=>r.json()).then(p=>$('#cand').textContent=`${p.first_name} ${p.last_name} — ${p.headline}`);
+fetch('/api/wallet').then(r=>r.json()).then(w=>$('#wallet').textContent=`TinyFish wallet $${w.available_balance}`).catch(()=>{});
+fetch('/api/health').then(r=>r.json()).then(h=>$('#health').textContent=`TinyFish ${h.tinyfish?'✓':'✗'} · Gemini ${h.gemini?'✓':'✗'}`);
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('a'));b.classList.add('a');
+ $('#tab-hunt').hidden=b.dataset.tab!='hunt';$('#tab-bench').hidden=b.dataset.tab!='bench';if(b.dataset.tab=='bench')bench()});
+function gauge(v){const c=v>=70?'#22c55e':v>=45?'#f59e0b':'#64748b',a=2*Math.PI*19;return `<svg class="fit" viewBox="0 0 46 46"><circle cx="23" cy="23" r="19" stroke="#0006" stroke-width="5" fill="none"/><circle cx="23" cy="23" r="19" stroke="${c}" stroke-width="5" fill="none" stroke-dasharray="${a*v/100} ${a}" transform="rotate(-90 23 23)" stroke-linecap="round"/><text x="23" y="27" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">${v}</text></svg>`}
+function renderJobs(){const order=Object.values(jobs).sort((a,b)=>((b.match||{}).fit_score??(b.status=='closed'?-2:-1))-((a.match||{}).fit_score??(a.status=='closed'?-2:-1)));
+ $('#jobs').innerHTML=order.map(j=>{const r=j.resolved||{},f=r.fields||{},t=(f.title||{}).value||j.search_title||j.url;
+ const tiers=(r.trail||[]).map(x=>`<span class="tier ${x.tier}">${x.tier} ${x.ms??''}ms</span>`).join('');
+ const conf=['is_open','title','location'].map(k=>f[k]?`<div class="sub" style="font-size:11px">${k} <span style="float:right">${Math.round(f[k].confidence*100)}%</span><div class="bar"><i style="width:${f[k].confidence*100}%"></i></div></div>`:'').join('');
+ return `<div class="job ${j.status=='closed'?'closed':''}" onclick="openJob('${j.id}')">${j.match?gauge(j.match.fit_score):''}
+ <span class="chip s-${j.status}">${j.status=='closed'?'GHOST / CLOSED':j.status.toUpperCase()}</span><span class="sub">${esc(j.site)}</span>
+ <h4 style="margin-top:6px;padding-right:50px">${esc(t)}</h4><div class="co">${esc((f.company||{}).value||'')} · ${esc((f.location||{}).value||'')}</div>
+ <div style="margin:6px 0">${tiers}</div>${conf}${(r.notes||[]).length?`<div class="sub" style="color:var(--y);font-size:11px;margin-top:4px">⚠ ${esc(r.notes[0]).slice(0,110)}</div>`:''}</div>`}).join('')}
+function addLive(id,url,label){if(lives[id])return;lives[id]=1;$('#livebox').hidden=false;const d=document.createElement('div');
+ d.innerHTML=`<div class="sub">${esc(label)}</div><div class="live"><iframe src="${esc(url)}" allow="autoplay"></iframe></div>`;$('#lives').prepend(d)}
+function trace(e){const d=document.createElement('div');d.className='ev '+e.stage;const j=e.job&&jobs[e.job];
+ d.innerHTML=`<span class="t">${e.t.toFixed(1)}s</span><span class="st">${e.stage}</span>${j?`<span class="sub">[${esc(((j.resolved&&j.resolved.fields.title.value)||j.search_title||'').slice(0,28))}]</span> `:''}${esc(e.msg)}`;
+ $('#trace').prepend(d);$('#elapsed').textContent=e.t.toFixed(1)+'s'}
+function listen(id,onEnd){const es=new EventSource(`/api/hunt/${id}/stream`);let tick=0;
+ es.onmessage=async m=>{const e=JSON.parse(m.data);if(e.stage=='eof'){es.close();await refresh(id);onEnd&&onEnd();return}
+ trace(e);if(e.stage=='live')addLive(e.job,e.data.streaming_url,(jobs[e.job]||{}).search_title||e.job);
+ if(++tick%3==0||['score','ghost','done','rank'].includes(e.stage))refresh(id)}}
+async function refresh(id){const h=await (await fetch('/api/hunt/'+id)).json();if(h.kind!='hunt')return;jobs=h.jobs;const v=Object.values(jobs);
+ counts={discover:v.length,resolve:v.filter(j=>j.resolved).length,ghost:v.filter(j=>j.status=='closed').length,live:v.filter(j=>j.resolved&&j.status!='closed').length,score:v.filter(j=>j.match).length,apply:v.filter(j=>j.status=='apply').length};pipe();renderJobs()}
+$('#go').onclick=async()=>{jobs={};lives={};$('#lives').innerHTML='';$('#trace').innerHTML='';counts={};pipe();
+ const r=await (await fetch('/api/hunt',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({role:$('#role').value,location:$('#loc').value,limit:+$('#limit').value,need_form:$('#needform').checked})})).json();
+ HUNT=r.id;history.replaceState(0,'','#'+r.id);listen(r.id)};
+function openJob(id){const j=jobs[id],r=j.resolved||{},f=r.fields||{},m=j.match;
+ const fieldRows=Object.entries(f).map(([k,v])=>`<tr><td><b>${k}</b></td><td>${esc(v.value)}</td><td>${Math.round(v.confidence*100)}%</td><td>${(v.sources||[]).map(s=>`<span class="tier ${s.tier}" title="${esc(s.evidence)}">${s.tier}: ${esc(String(s.value).slice(0,30))}</span>`).join(' ')}</td></tr>`).join('');
+ $('#drawer').innerHTML=`<div class="row"><button class="ghost" onclick="$('#drawer').classList.remove('open')">✕</button><a href="${esc(j.url)}" target="_blank" class="sub">${esc(j.url)}</a></div>
+ <h2>${esc((f.title||{}).value||j.search_title)}</h2>
+ <h3>Facts, confidence & evidence</h3><table><tr><th>field</th><th>value</th><th>conf</th><th>sources (hover = evidence)</th></tr>${fieldRows}</table>
+ ${(r.notes||[]).map(n=>`<div class="q" style="border-color:var(--y)">cross-check: ${esc(n)}</div>`).join('')}
+ <h3>Resolution path</h3>${(r.trail||[]).map(t=>`<div class="q"><span class="tier ${t.tier}">${t.tier}</span> ${t.ms}ms — ${esc(t.why)}</div>`).join('')}
+ ${r.agent&&r.agent.run_id?`<div class="sub">Agent run ${r.agent.run_id} · ${(r.agent.steps||[]).length} steps · ~$${r.agent.usd_est} <button class="ghost" onclick="film('${r.agent.run_id}')">filmstrip</button></div><div id="film" class="row"></div>`:''}
+ ${m?`<h3>Fit ${m.fit_score}/100 · ${m.verdict.toUpperCase()} <span class="sub">${m.model}, ${m.ms}ms</span></h3><p>${esc(m.summary)}</p>
+ ${m.reasons.map(x=>`<div class="reason"><b class="${x.impact=='+'?'ok':'bad'}">${x.impact}</b> ${esc(x.claim)} ${x.verified?'<span class="chip s-open">evidence verified</span>':'<span class="chip s-closed">unverified</span>'}<div class="q">JD: “${esc(x.jd_evidence)}”</div><div class="q" style="border-color:var(--g)">Resume: “${esc(x.resume_evidence)}”</div></div>`).join('')}
+ <h3>Gaps</h3>${m.gaps.map(g=>`<div class="q" style="border-color:var(--r)">${esc(g)}</div>`).join('')}
+ <h3>Drafted answers</h3>${m.answers.map(a=>`<div class="reason"><b>${esc(a.question)}</b> ${a.needs_human?'<span class="chip s-stretch">needs you</span>':''}<div>${esc(a.answer)}</div><div class="sub">grounded in: ${esc(a.grounded_in)}</div></div>`).join('')}
+ <p><button onclick="doPrefill('${id}')">Prefill this application in a TinyFish browser (stops before Submit)</button></p><div id="pf"></div>`:''}`;
+ $('#drawer').classList.add('open')}
+async function film(rid){const r=await (await fetch('/api/run/'+rid)).json();$('#film').innerHTML=(r.steps||[]).map(s=>`<figure style="margin:4px;width:170px"><img src="/api/run/${rid}/shot/${s.id}" style="width:170px;border-radius:6px;border:1px solid var(--b)"><figcaption class="sub" style="font-size:10px">${esc(s.action)}</figcaption></figure>`).join('')}
+async function doPrefill(id){const r=await (await fetch('/api/prefill',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({hunt:HUNT,job:id})})).json();
+ $('#pf').innerHTML='<div class="sub">starting cloud browser…</div><div id="pflive"></div><div id="pflog"></div>';
+ const es=new EventSource(`/api/hunt/${r.id}/stream`);es.onmessage=m=>{const e=JSON.parse(m.data);if(e.stage=='eof'){es.close();return}
+ if(e.stage=='live'){$('#pflive').innerHTML=`<div class="live" style="aspect-ratio:16/11"><iframe src="${esc(e.data.streaming_url)}"></iframe></div>`;addLive('pf'+r.id,e.data.streaming_url,'PREFILL '+(jobs[id].resolved.fields.title.value||''))}
+ const d=document.createElement('div');d.className='ev '+e.stage;d.innerHTML=`<span class="t">${e.t.toFixed(1)}s</span><span class="st">${e.stage}</span>${esc(e.msg)}`;$('#pflog').append(d);trace(e);
+ if(e.stage=='done'&&e.data.filled)$('#pflog').innerHTML+=`<table>${e.data.filled.map(x=>`<tr><td>${esc(x.label)}</td><td>${esc(x.value)}</td><td><span class="chip s-${x.status=='filled'?'open':'stretch'}">${x.status}</span></td></tr>`).join('')}</table><div class="chip s-${e.data.submitted?'closed':'open'}">submitted = ${e.data.submitted}</div>`}}
+async function bench(){const b=await (await fetch('/api/bench')).json();if(!b.strategies){$('#benchbox').innerHTML='Run <code>python bench/run_bench.py</code>';return}
+ const S=Object.entries(b.strategies),mx=Math.max(...S.map(([k,v])=>v.p95_ms||0));
+ $('#benchbox').innerHTML=`<h2>Benchmark · ${b.n} hand-labelled postings · ${esc(b.when)}</h2><table><tr><th>strategy</th><th>p50</th><th>p95</th><th>success</th><th>is_open acc</th><th>title acc</th><th>location acc</th><th>agent steps</th><th>est $</th></tr>
+ ${S.map(([k,v])=>`<tr><td><b>${k}</b></td><td>${v.p50_ms}ms</td><td>${v.p95_ms}ms</td><td>${(v.success*100).toFixed(0)}%</td><td>${(v.acc.is_open*100).toFixed(0)}%</td><td>${(v.acc.title*100).toFixed(0)}%</td><td>${(v.acc.location*100).toFixed(0)}%</td><td>${v.agent_steps}</td><td>$${v.usd}</td></tr>`).join('')}</table>
+ <h3>p50 / p95 latency</h3>${S.map(([k,v])=>`<div class="row"><span style="width:110px">${k}</span><div style="flex:1;background:#0005;border-radius:5px;position:relative;height:22px"><div style="position:absolute;height:100%;width:${v.p95_ms/mx*100}%;background:#a78bfa55;border-radius:5px"></div><div style="position:absolute;height:100%;width:${v.p50_ms/mx*100}%;background:linear-gradient(90deg,#38bdf8,#22c55e);border-radius:5px"></div></div><span class="sub" style="width:140px">${v.p50_ms} / ${v.p95_ms} ms</span></div>`).join('')}
+ <h3>Findings</h3>${(b.findings||[]).map(x=>`<div class="q">${esc(x).replace(/\*\*/g,"")}</div>`).join('')}`}
+if(location.hash.length>2){HUNT=location.hash.slice(1);refresh(HUNT).then(()=>fetch('/api/hunt/'+HUNT).then(r=>r.json()).then(h=>h.events.forEach(e=>{trace(e);if(e.stage=='live')addLive(e.job,e.data.streaming_url,(jobs[e.job]||{}).search_title||e.job)}))).catch(()=>{})}
+</script></body></html>

@@ -1,0 +1,14 @@
+[
+ {"url":"https://job-boards.greenhouse.io/gitlab/jobs/8704363002","is_open":true,"title":"Backend Engineer (Python),AI Engineering: Agent Foundations","location":"Remote, Canada; Remote, Poland; Remote, United Kingdom"},
+ {"url":"https://job-boards.greenhouse.io/anthropic/jobs/5391376008","is_open":true,"title":"Account Executive - DNB","location":"Singapore"},
+ {"url":"https://job-boards.greenhouse.io/coderoad/jobs/4367876009","is_open":false},
+ {"url":"https://job-boards.greenhouse.io/gitlab/jobs/1234567","is_open":false},
+ {"url":"https://jobs.lever.co/palantir/6ed76ce8-4156-4b60-b120-403538bd66cd","is_open":true,"title":"Administrative Business Partner","location":"Singapore, Singapore"},
+ {"url":"https://jobs.lever.co/spotify/223f9722-3579-4ff2-b123-e4cc7b0c1a64","is_open":true,"title":"Art Director - Mexico","location":"Mexico City"},
+ {"url":"https://jobs.lever.co/palantir/00000000-1111-2222-3333-444444444444","is_open":false},
+ {"url":"https://jobs.ashbyhq.com/openai/240d459b-696d-43eb-8497-fab3e56ecd9b","is_open":true,"title":"Research Engineer","location":"San Francisco"},
+ {"url":"https://zillow.wd5.myworkdayjobs.com/en-US/Zillow_Group_External/job/Software-Development-Engineer--Backend--Python--Kubernetes-_P751307-1","is_open":true,"title":"Software Development Engineer, Backend (Python /Kubernetes)","location":"Mexico City"},
+ {"url":"https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Sr-Backend-Engineer--Python-_R36375","is_open":true,"title":"Sr Backend Engineer (Python)","location":"USA - NY - New York City - BlueFlame AI / Grata"},
+ {"url":"https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Senior-Backend-Engineer--Python-API----Hybrid-NYC--Blueflame-AI_R35807","is_open":true,"title":"AI Engineer - NYC","location":"USA - NY - New York City - BlueFlame AI / Grata","note":"re-used requisition: slug says Senior Backend Engineer"},
+ {"url":"https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Software-Development-Engineer---Workday-Everywhere_JR-0108945","is_open":false}
+]

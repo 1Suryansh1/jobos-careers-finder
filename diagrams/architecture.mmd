@@ -1,0 +1,17 @@
+flowchart LR
+  U[Candidate + profile] --> UI[JobOS UI<br/>pipeline · live browsers · reasoning trace]
+  UI -->|POST /api/hunt · SSE| API[FastAPI orchestrator]
+  API --> D[Discover<br/>TinyFish Search x4 ATS domains, parallel]
+  D --> RQ{Resolve each posting<br/>cheapest tier first}
+  RQ -->|0| C[(SQLite cache<br/>TTL per fact kind)]
+  RQ -->|1 Greenhouse/Lever/Ashby| ATS[Public job-board APIs]
+  RQ -->|2 Workday/unknown| F[TinyFish Fetch ttl=0]
+  RQ -->|3 forms / login gates / ambiguous| AG[TinyFish Agent run-sse<br/>tight goal + output_schema<br/>≤2 concurrent]
+  AG -->|STREAMING_URL| UI
+  ATS & F & AG --> X[Cross-check + schema validate<br/>confidence + evidence per field]
+  X -->|closed| G[Ghost / stale filter]
+  X -->|open| M[Gemini 2.5 Flash structured output<br/>fit score, quoted evidence, grounded answers]
+  M --> V[Evidence verifier<br/>drops claims not in resume]
+  V --> RK[Rank]
+  RK -->|user clicks Prefill| P[TinyFish Agent prefill<br/>submit-guard cancels run]
+  P -->|live view| UI

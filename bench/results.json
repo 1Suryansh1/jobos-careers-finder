@@ -1,0 +1,927 @@
+{
+ "strategies": {
+  "tiered": {
+   "n": 12,
+   "p50_ms": 1640,
+   "p95_ms": 118029,
+   "mean_ms": 22228,
+   "success": 1.0,
+   "acc": {
+    "is_open": 1.0,
+    "title": 1.0,
+    "location": 0.875
+   },
+   "agent_steps": 24,
+   "usd": 0.384,
+   "conf_when_right": 0.88,
+   "conf_when_wrong": null,
+   "rows": [
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/8704363002",
+     "ms": 1401,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Backend Engineer (Python),AI Engineering: Agent Foundations",
+      "location": "Remote, Canada; Remote, Poland; Remote, United Kingdom"
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391376008",
+     "ms": 1621,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Account Executive - DNB",
+      "location": "Singapore"
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/coderoad/jobs/4367876009",
+     "ms": 1344,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/1234567",
+     "ms": 1424,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/6ed76ce8-4156-4b60-b120-403538bd66cd",
+     "ms": 2150,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Administrative Business Partner",
+      "location": "Singapore, Singapore"
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/spotify/223f9722-3579-4ff2-b123-e4cc7b0c1a64",
+     "ms": 1659,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Art Director - Mexico",
+      "location": "Mexico City"
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/00000000-1111-2222-3333-444444444444",
+     "ms": 1543,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.ashbyhq.com/openai/240d459b-696d-43eb-8497-fab3e56ecd9b",
+     "ms": 524,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.97,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Research Engineer",
+      "location": "San Francisco"
+     }
+    },
+    {
+     "url": "https://zillow.wd5.myworkdayjobs.com/en-US/Zillow_Group_External/job/Software-Development-Engineer--Backend--Python--Kubernetes-_P751307-1",
+     "ms": 105230,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.65,
+     "steps": 8,
+     "run_id": "6d57c06f-e269-496a-a8cb-6357fb50926a",
+     "streaming_url": "https://ip-54-219-162-101.tetra-data.production.tinyfish.io/tf-2edde551-c528-463e-9440-3ca5ec12794a/stream/0",
+     "notes": [
+      "is_open: agent='True' disagrees with fetch='False'"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Software Development Engineer, Backend (Python /Kubernetes)",
+      "location": "Mexico City"
+     }
+    },
+    {
+     "url": "https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Sr-Backend-Engineer--Python-_R36375",
+     "ms": 133674,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.65,
+     "steps": 16,
+     "run_id": "29b09dbf-06ff-41c7-bf02-383edf01c934",
+     "streaming_url": "https://ip-52-53-183-55.tetra-data.production.tinyfish.io/tf-7d86034d-2537-4760-8209-02e9e0b06f51/stream/1",
+     "notes": [
+      "is_open: agent='True' disagrees with fetch='False'"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Sr Backend Engineer (Python)",
+      "location": "USA - NY - New York City - BlueFlame AI / Grata"
+     }
+    },
+    {
+     "url": "https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Senior-Backend-Engineer--Python-API----Hybrid-NYC--Blueflame-AI_R35807",
+     "ms": 8826,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [
+      "title 'AI Engineer - NYC' does not match URL slug 'Senior Backend Engineer  Python API    Hybrid NYC  Blueflame AI' (possible re-used requisition)"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "AI Engineer - NYC",
+      "location": null
+     }
+    },
+    {
+     "url": "https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Software-Development-Engineer---Workday-Everywhere_JR-0108945",
+     "ms": 7341,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [
+      "title 'Careers at Workday' does not match URL slug 'Software Development Engineer   Workday Everywhere' (possible re-used requisition)"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": "Careers at Workday",
+      "location": null
+     }
+    }
+   ]
+  },
+  "fetch_only": {
+   "n": 12,
+   "p50_ms": 5397,
+   "p95_ms": 11116,
+   "mean_ms": 5703,
+   "success": 1.0,
+   "acc": {
+    "is_open": 0.833,
+    "title": 0.875,
+    "location": 0.0
+   },
+   "agent_steps": 0,
+   "usd": 0.0,
+   "conf_when_right": 0.75,
+   "conf_when_wrong": 0.75,
+   "rows": [
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/8704363002",
+     "ms": 1443,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Backend Engineer (Python),AI Engineering: Agent Foundations",
+      "location": null
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391376008",
+     "ms": 7511,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Account Executive - DNB",
+      "location": null
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/coderoad/jobs/4367876009",
+     "ms": 1454,
+     "ok": true,
+     "score": {
+      "is_open": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "CodeRoad",
+      "location": null
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/1234567",
+     "ms": 1538,
+     "ok": true,
+     "score": {
+      "is_open": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "GitLab",
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/6ed76ce8-4156-4b60-b120-403538bd66cd",
+     "ms": 2469,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": false,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Palantir Technologies - Administrative Business Partner",
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/spotify/223f9722-3579-4ff2-b123-e4cc7b0c1a64",
+     "ms": 4939,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Spotify - Art Director - Mexico",
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/00000000-1111-2222-3333-444444444444",
+     "ms": 1517,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.ashbyhq.com/openai/240d459b-696d-43eb-8497-fab3e56ecd9b",
+     "ms": 5855,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Research Engineer",
+      "location": null
+     }
+    },
+    {
+     "url": "https://zillow.wd5.myworkdayjobs.com/en-US/Zillow_Group_External/job/Software-Development-Engineer--Backend--Python--Kubernetes-_P751307-1",
+     "ms": 9397,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Software Development Engineer, Backend (Python /Kubernetes)",
+      "location": null
+     }
+    },
+    {
+     "url": "https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Sr-Backend-Engineer--Python-_R36375",
+     "ms": 9939,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Sr Backend Engineer (Python)",
+      "location": null
+     }
+    },
+    {
+     "url": "https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Senior-Backend-Engineer--Python-API----Hybrid-NYC--Blueflame-AI_R35807",
+     "ms": 11910,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [
+      "title 'AI Engineer - NYC' does not match URL slug 'Senior Backend Engineer  Python API    Hybrid NYC  Blueflame AI' (possible re-used requisition)"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "AI Engineer - NYC",
+      "location": null
+     }
+    },
+    {
+     "url": "https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Software-Development-Engineer---Workday-Everywhere_JR-0108945",
+     "ms": 10467,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.75,
+     "steps": 0,
+     "run_id": null,
+     "streaming_url": null,
+     "notes": [
+      "title 'Careers at Workday' does not match URL slug 'Software Development Engineer   Workday Everywhere' (possible re-used requisition)"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": "Careers at Workday",
+      "location": null
+     }
+    }
+   ]
+  },
+  "agent_only": {
+   "n": 12,
+   "p50_ms": 149611,
+   "p95_ms": 290279,
+   "mean_ms": 153102,
+   "success": 1.0,
+   "acc": {
+    "is_open": 1.0,
+    "title": 1.0,
+    "location": 0.875
+   },
+   "agent_steps": 98,
+   "usd": 1.568,
+   "conf_when_right": 0.85,
+   "conf_when_wrong": null,
+   "rows": [
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/8704363002",
+     "ms": 87246,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 5,
+     "run_id": "9e8ce138-3b60-4825-b5aa-f5a0b67e486f",
+     "streaming_url": "https://ip-54-193-106-100.tetra-data.production.tinyfish.io/tf-eeae7813-eff3-4e21-b886-8a3160b184b8/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Backend Engineer (Python), AI Engineering: Agent Foundations",
+      "location": "Remote, Canada; Remote, Poland; Remote, United Kingdom"
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391376008",
+     "ms": 42296,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 4,
+     "run_id": "d1689549-8579-488c-ab52-2f508c85bcb1",
+     "streaming_url": "https://ip-52-53-183-55.tetra-data.production.tinyfish.io/tf-ec538656-68cf-4bfa-8144-76fb585d8e7e/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Account Executive - DNB",
+      "location": "Singapore"
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/coderoad/jobs/4367876009",
+     "ms": 72379,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.85,
+     "steps": 3,
+     "run_id": "7583eef7-6979-49ca-b842-54e665489d27",
+     "streaming_url": "https://ip-54-183-170-255.tetra-data.production.tinyfish.io/tf-d69ba37d-054c-4ad7-a12d-1ba93ca6073f/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/1234567",
+     "ms": 86597,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.85,
+     "steps": 2,
+     "run_id": "c834fdb4-9f6c-4529-b641-cbd72552e6e9",
+     "streaming_url": "https://ip-54-193-106-100.tetra-data.production.tinyfish.io/tf-2dc2b577-538e-445b-849c-d4d64fc7e4b8/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/6ed76ce8-4156-4b60-b120-403538bd66cd",
+     "ms": 176538,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 9,
+     "run_id": "26857457-0245-4de3-a24d-eb4ccb413f2b",
+     "streaming_url": "https://ip-54-193-106-100.tetra-data.production.tinyfish.io/tf-6ad4c3d8-4f3a-4663-b229-444c300f9bf0/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Administrative Business Partner",
+      "location": "Singapore, Singapore"
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/spotify/223f9722-3579-4ff2-b123-e4cc7b0c1a64",
+     "ms": 159956,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 10,
+     "run_id": "f3398e83-3360-4084-9144-b1d63d3893f3",
+     "streaming_url": "https://ip-54-183-170-255.tetra-data.production.tinyfish.io/tf-7240ace5-2e31-4737-aa5c-c32239d91070/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Art Director - Mexico",
+      "location": "Mexico City"
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/00000000-1111-2222-3333-444444444444",
+     "ms": 135497,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.85,
+     "steps": 3,
+     "run_id": "0bb8abb4-5abc-448e-ac2e-aad756214f1f",
+     "streaming_url": "https://ip-52-53-183-55.tetra-data.production.tinyfish.io/tf-8d11d895-3854-42de-8986-8a86bc008892/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.ashbyhq.com/openai/240d459b-696d-43eb-8497-fab3e56ecd9b",
+     "ms": 150483,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 6,
+     "run_id": "3478ac8b-62f9-4d5e-88f2-d64eb17e5cb0",
+     "streaming_url": "https://ip-54-219-162-101.tetra-data.production.tinyfish.io/tf-676ee0d8-83e0-473c-82e8-754a7024d6b8/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Research Engineer",
+      "location": "San Francisco"
+     }
+    },
+    {
+     "url": "https://zillow.wd5.myworkdayjobs.com/en-US/Zillow_Group_External/job/Software-Development-Engineer--Backend--Python--Kubernetes-_P751307-1",
+     "ms": 177024,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 15,
+     "run_id": "3ea61457-ba6a-4dc6-85d1-0458fa1b7554",
+     "streaming_url": "https://ip-52-53-183-55.tetra-data.production.tinyfish.io/tf-acdb02f5-65ec-4c3a-8677-ae8192a19043/stream/3",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Software Development Engineer, Backend (Python /Kubernetes)",
+      "location": "Mexico City (Remote)"
+     }
+    },
+    {
+     "url": "https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Sr-Backend-Engineer--Python-_R36375",
+     "ms": 200655,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": true
+     },
+     "conf": 0.85,
+     "steps": 12,
+     "run_id": "e3f3c959-4fbb-47d7-990e-f191548904f1",
+     "streaming_url": "https://ip-54-151-8-216.tetra-data.production.tinyfish.io/tf-642c58b8-cde7-4825-9b82-0e13729f4bd0/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "Sr Backend Engineer (Python)",
+      "location": "USA - NY - New York City - BlueFlame AI / Grata"
+     }
+    },
+    {
+     "url": "https://datasite.wd1.myworkdayjobs.com/en-US/datasite/job/Senior-Backend-Engineer--Python-API----Hybrid-NYC--Blueflame-AI_R35807",
+     "ms": 399820,
+     "ok": true,
+     "score": {
+      "is_open": true,
+      "title": true,
+      "location": false
+     },
+     "conf": 0.85,
+     "steps": 26,
+     "run_id": "52fbdce0-c91b-468c-8015-d75826bba87c",
+     "streaming_url": "https://ip-54-151-73-218.tetra-data.production.tinyfish.io/tf-4cb7988f-f542-4196-a678-5edd25cee98a/stream/3",
+     "notes": [
+      "title 'AI Engineer' does not match URL slug 'Senior Backend Engineer  Python API    Hybrid NYC  Blueflame AI' (possible re-used requisition)"
+     ],
+     "schema_problems": [],
+     "got": {
+      "is_open": true,
+      "title": "AI Engineer",
+      "location": "NYC (Hybrid - 3 days/week onsite near Central Park)"
+     }
+    },
+    {
+     "url": "https://workday.wd5.myworkdayjobs.com/en-US/Workday/job/Software-Development-Engineer---Workday-Everywhere_JR-0108945",
+     "ms": 148739,
+     "ok": true,
+     "score": {
+      "is_open": true
+     },
+     "conf": 0.85,
+     "steps": 3,
+     "run_id": "32158939-df26-4e58-ba33-00d8e17ef91b",
+     "streaming_url": "https://ip-54-193-106-100.tetra-data.production.tinyfish.io/tf-309a945e-ea68-44c0-b629-43dd4a6d19a2/stream/0",
+     "notes": [],
+     "schema_problems": [],
+     "got": {
+      "is_open": false,
+      "title": null,
+      "location": null
+     }
+    }
+   ]
+  },
+  "agent_loose": {
+   "n": 4,
+   "p50_ms": 52517,
+   "p95_ms": 81574,
+   "mean_ms": 55399,
+   "success": 0.0,
+   "acc": {
+    "is_open": 0.0,
+    "title": 0.0,
+    "location": 0.0
+   },
+   "agent_steps": 18,
+   "usd": 0.288,
+   "conf_when_right": null,
+   "conf_when_wrong": 0.0,
+   "rows": [
+    {
+     "url": "https://job-boards.greenhouse.io/gitlab/jobs/8704363002",
+     "ms": 32448,
+     "ok": false,
+     "score": {
+      "is_open": false,
+      "title": false,
+      "location": false
+     },
+     "conf": 0.0,
+     "steps": 4,
+     "run_id": "d2a6c2d8-72bb-4e6d-b67f-5e791c967c0a",
+     "streaming_url": "https://ip-54-193-106-100.tetra-data.production.tinyfish.io/tf-f4dda8f3-ef00-41be-93bd-407064c8458b/stream/0",
+     "notes": [],
+     "schema_problems": [
+      "agent: missing is_open",
+      "agent: missing apply_requires_account"
+     ],
+     "got": {
+      "is_open": null,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391376008",
+     "ms": 37857,
+     "ok": false,
+     "score": {
+      "is_open": false,
+      "title": false,
+      "location": false
+     },
+     "conf": 0.0,
+     "steps": 4,
+     "run_id": "10f9da5c-8782-4804-9e7d-9d64b3d92823",
+     "streaming_url": "https://ip-54-151-8-216.tetra-data.production.tinyfish.io/tf-d80b56ad-4c87-4045-ac5f-31c3bc615689/stream/0",
+     "notes": [],
+     "schema_problems": [
+      "agent: missing is_open",
+      "agent: missing apply_requires_account"
+     ],
+     "got": {
+      "is_open": null,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/palantir/6ed76ce8-4156-4b60-b120-403538bd66cd",
+     "ms": 67178,
+     "ok": false,
+     "score": {
+      "is_open": false,
+      "title": false,
+      "location": false
+     },
+     "conf": 0.0,
+     "steps": 4,
+     "run_id": "88937979-98a3-4b2a-92b5-4db74a6e13f9",
+     "streaming_url": "https://ip-13-52-79-183.tetra-data.production.tinyfish.io/tf-848f4a54-7b8a-44c2-a59a-2b9959056c7f/stream/0",
+     "notes": [],
+     "schema_problems": [
+      "agent: missing is_open",
+      "agent: missing apply_requires_account"
+     ],
+     "got": {
+      "is_open": null,
+      "title": null,
+      "location": null
+     }
+    },
+    {
+     "url": "https://jobs.lever.co/spotify/223f9722-3579-4ff2-b123-e4cc7b0c1a64",
+     "ms": 84115,
+     "ok": false,
+     "score": {
+      "is_open": false,
+      "title": false,
+      "location": false
+     },
+     "conf": 0.0,
+     "steps": 6,
+     "run_id": "fe9a3759-b50f-464e-a160-68649da7aea0",
+     "streaming_url": "https://ip-3-101-138-120.tetra-data.production.tinyfish.io/tf-89da4510-b40f-4616-b01f-3ca226651719/stream/0",
+     "notes": [],
+     "schema_problems": [
+      "agent: missing is_open",
+      "agent: missing apply_requires_account"
+     ],
+     "got": {
+      "is_open": null,
+      "title": null,
+      "location": null
+     }
+    }
+   ]
+  }
+ },
+ "n": 12,
+ "when": "2026-10-14 17:42 IST",
+ "findings": [
+  "1. **Tiered vs agent-only:** both reach the same accuracy (100% is_open, 100% title). Tiered is about **90\u00d7 faster at p50** (1.6 s vs 150 s), has a lower p95, and costs about 4\u00d7 less, because 9 of 12 postings never touch a browser (8 answered by an ATS API, 1 dead Workday page short-circuited at Fetch).",
+  "2. **Tiered vs fetch-only:** fetch-only is faster at the tail but **gets is_open wrong on 2 of 4 closed postings**. Greenhouse redirects a dead job to the company's board page, so Fetch sees a live page titled 'CodeRoad' or 'GitLab'. Only the ATS API 404 (or an agent) catches this. Fetch also returns no structured location.",
+  "3. **Tight goal + output_schema vs loose goal without schema:** the loose goal took fewer steps but gave **0% usable fields**, because it returned free-form prose that can't be parsed into the contract. The schema is what makes agent output machine-verifiable.",
+  "4. **Confidence calibration:** tiered's mean confidence on correct liveness calls is 0.88. Fetch-only has the same confidence (0.75) whether right or wrong, which shows single-source confidence is uninformative. Cross-checking is what separates them.",
+  "5. The one remaining location miss in tiered/agent is the re-used Datasite requisition. The agent returned a description ('NYC (Hybrid\u2026)') instead of the label, and it's flagged with lower title confidence."
+ ]
+}

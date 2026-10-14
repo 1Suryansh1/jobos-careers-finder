@@ -1,0 +1,24 @@
+sequenceDiagram
+  participant UI
+  participant API as JobOS API
+  participant S as TF Search
+  participant A as ATS API
+  participant F as TF Fetch
+  participant G as TF Agent
+  participant L as Gemini
+  UI->>API: hunt(role, location)
+  API->>S: 4 queries in parallel (~1.5 s)
+  par per posting (pool of 8)
+    API->>A: Greenhouse/Lever/Ashby JSON (~0.2-2 s)
+    A-->>API: open/closed + fields + questions
+  and Workday
+    API->>F: fetch ttl=0 (~9-34 s, flaky)
+    API->>G: run-sse (60-200 s)
+    G-->>UI: STREAMING_URL -> iframe
+    G-->>API: PROGRESS ... COMPLETE(result per output_schema)
+  end
+  API->>L: fit + answers (3 concurrent, ~7 s)
+  API-->>UI: SSE trace events + ranked cards
+  UI->>API: prefill(job)
+  API->>G: fill fields, never submit (guard cancels on "click submit")
+  G-->>UI: live browser + filled-field report
