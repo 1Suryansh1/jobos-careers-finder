@@ -98,16 +98,19 @@ def workday(company, url, prefs, on=None, on_live=None):
     """TinyFish Agent: Workday is a JS SPA; filtering by keyword + country needs clicks."""
     from .finder import queries
     kw = "intern" if prefs.get("job_type") == "internship" else queries(prefs.get("role", ""), False)[0]
-    goal = (f"This is a Workday careers site. 1) Type '{kw}' in the search box and press Enter. 2) Open the Location (or Country) filter, select India, and apply it. "
-            "3) Extract every job card on the first results page: title, location, posted text and the job link exactly as the card's href attribute (never construct or guess a URL; omit the job if you cannot read its link). "
-            "If the filter cannot be applied, return the unfiltered first page. Do not open jobs, do not apply, do not sign in. Return JSON.")
+    loc = next((l for l in prefs.get("locations", []) if l.lower() != "remote"), "India")
+    url = f"{url}?q={kw} {loc}"
+    goal = (f"This Workday careers page already shows search results for '{kw} {loc}'. Wait for the job list to load. "
+            f"Keep only cards whose location is in {loc} (or Remote). "
+            "For each kept card extract title, location, posted text and the job link exactly as the card's href attribute (never construct or guess a URL; omit the job if you cannot read its link). "
+            "Do not click into jobs, do not apply, do not sign in. Return JSON.")
     def ev(e):
         if e.get("type") == "STREAMING_URL" and on_live: on_live(company, e["streaming_url"])
         if e.get("type") == "PROGRESS" and on: on("agent", f"{company}: {e.get('purpose')}")
     r = tf.agent(url, goal, WD_SCHEMA, on_event=ev, tag="workday_filter", max_duration=150)
     res = r["result"] if isinstance(r["result"], dict) else {}
-    base = re.match(r"https://[^/]+", url).group(0)
+    base = re.match(r"https://[^/]+/[^/?]+", url).group(0)
     jobs = [L(title=j["title"], company=company, location=j.get("location") or "", posted=j.get("posted"),
-              url=(j["url"] if j["url"].startswith("http") else base + j["url"]), ats="workday", run_id=r["run_id"]) for j in res.get("jobs", [])]
+              url=(j["url"] if j["url"].startswith("http") else base + j["url"] if j["url"].startswith("/job") else re.match(r"https://[^/]+", base).group(0) + j["url"]), ats="workday", run_id=r["run_id"]) for j in res.get("jobs", [])]
     on and on("agent", f"{company}: Agent applied filters -> {len(jobs)} openings in {r['ms']//1000}s, {len(r['steps'])} steps (~${r['usd_est']})")
     return jobs, r

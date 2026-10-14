@@ -56,19 +56,26 @@ summary:before{content:"›";display:inline-block;margin-right:6px;transition:tr
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 16px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
 .menu{position:relative}.menu .dd{position:absolute;right:0;top:44px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(31,36,48,.12);padding:8px;display:none;min-width:160px}.menu.open .dd{display:block}
 .dd a{display:block;padding:8px 12px;border-radius:8px;text-decoration:none;font-size:14px}.dd a:hover{background:#F4F2FA}
+.pulse-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:24px}@media(max-width:900px){.pulse-grid{grid-template-columns:1fr}}
+.hb{display:flex;align-items:center;gap:8px;font-size:13px;margin:6px 0}.hb .l{width:110px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hb .t{flex:1;height:8px;border-radius:4px;background:#F3F2F7;overflow:hidden}.hb .t i{display:block;height:100%;border-radius:4px;background:#C9BFF5;transition:width .4s}.hb .n{width:28px;text-align:right;color:var(--mute);font-size:12px}
+.sk-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.btn.ghost{background:none;color:var(--mute);padding:8px 12px}.btn.ghost:hover{background:#F4F2FA;color:var(--ink)}.btn.saved{color:var(--lav-i);background:var(--lav)}
+.board{display:grid;grid-template-columns:repeat(5,minmax(200px,1fr));gap:16px;margin-top:24px;overflow-x:auto}.col{background:#F3F2F7;border-radius:var(--r);padding:12px;min-height:240px}.col h4{margin:4px 4px 12px;font-size:13px;text-transform:capitalize;display:flex;justify-content:space-between}
+.mini{background:#fff;border-radius:12px;box-shadow:var(--sh);padding:12px;margin-bottom:8px;font-size:13px}.mini b{display:block;font-size:14px;line-height:20px}.mini select{margin-top:8px;width:100%;border:1px solid var(--line);border-radius:8px;padding:4px;background:#FCFCFD;font:inherit}
 </style></head><body>
-<div class="top"><div class="in"><div class="brand">Job<span>OS</span> <span class="muted sm" style="font-weight:500">· Careers Finder</span></div><div class="grow"></div>
+<div class="top"><div class="in"><div class="brand">Job<span>OS</span> <span class="muted sm" style="font-weight:500">· Careers Finder</span></div><nav class="seg" id="nav" style="margin-left:24px;width:240px"><button data-v="open" class="on">Openings</button><button data-v="track">Tracker <span id="tcount"></span></button></nav><div class="grow"></div>
 <span class="sm muted" id="fresh">Not run yet</span>
 <button class="btn sec" id="refresh" title="Re-check every saved listing is still live">↻ Refresh</button>
 <div class="menu" id="menu"><button class="btn sec" onclick="this.parentNode.classList.toggle('open')">Export ▾</button><div class="dd"><a href="/api/export.csv">CSV</a><a href="/api/export.json">JSON</a></div></div>
 </div></div>
-<div class="wrap">
+<div class="wrap" id="v-open">
 <aside class="card" id="prefs"><h2>Your preferences</h2>
  <label class="f" for="role">Role</label><input class="inp" id="role" value="ML / SWE" placeholder="e.g. ML / SWE, data analyst">
  <label class="f" for="locs">Locations</label><input class="inp" id="locs" value="India, Remote" placeholder="India, Bengaluru, Remote">
  <label class="f" for="kw">Keywords <span class="xs">(boost)</span></label><input class="inp" id="kw" value="python" placeholder="python, pytorch">
+ <label class="f" for="mysk">Your skills <span class="xs">(for skill gap)</span></label><input class="inp" id="mysk" value="python, pytorch, sql, git" placeholder="python, react, sql">
  <label class="f" for="ex">Exclude</label><input class="inp" id="ex" value="" placeholder="sales, recruiter">
  <label class="f">Type</label><div class="seg" id="type"><button data-v="internship" class="on">Internship</button><button data-v="full-time">Full-time</button><button data-v="both">Both</button></div>
+ <label class="f">Posted within</label><div class="seg" id="win"><button data-v="" class="on">Any</button><button data-v="7">7d</button><button data-v="14">14d</button><button data-v="30">30d</button></div>
  <label class="f">Seniority</label><div class="checks" id="sen"><span class="ck on" data-v="intern">Intern</span><span class="ck on" data-v="entry">Entry</span><span class="ck" data-v="mid">Mid</span><span class="ck" data-v="senior">Senior</span></div>
  <div class="tog"><span>Needs visa sponsorship<br><span class="xs muted">for roles outside India</span></span><span class="sw" id="visa" role="switch" tabindex="0"></span></div>
  <div class="tog"><span>Search Workday portals<br><span class="xs muted">TinyFish Agent · cached 24h</span></span><span class="sw on" id="agent" role="switch" tabindex="0"></span></div>
@@ -79,11 +86,14 @@ summary:before{content:"›";display:inline-block;margin-right:6px;transition:tr
  <h1>Openings that match you</h1><div class="muted sm" id="sub">Set your preferences and press <b>Find openings</b>. Results are deduplicated across sources and checked to be live.</div>
  <div class="prog" id="prog" hidden></div>
  <div class="stats" id="stats"></div>
+ <div class="card" id="pulse" hidden style="margin-top:16px"></div>
  <div id="livewrap" hidden><div class="lives" id="lives"></div><div class="log" id="log"></div></div>
  <div class="bar" id="bar" hidden><input class="inp" id="q" placeholder="Filter results…" style="max-width:280px"><span class="ck" id="newonly">New only</span>
   <div class="grow"></div><div class="seg" id="sort" style="width:220px"><button data-v="score" class="on">Best match</button><button data-v="new">Newest</button></div></div>
  <div class="list" id="list"><div class="card empty"><div class="ic">✦</div><b>No search yet</b><div class="muted sm" style="margin-top:8px">Your matched internships and jobs will appear here, with apply links.</div></div></div>
-</main></div><div class="toast" id="toast"></div>
+</main></div>
+<div id="v-track" hidden style="max-width:1240px;margin:auto;padding:24px"><h1>Application tracker</h1><div class="muted sm">Saved locally. JobOS never submits applications for you; move cards as you apply.</div><div class="board" id="board"></div></div>
+<div class="toast" id="toast"></div>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const SRC={"boards (ATS APIs)":["mint","Company boards"],"TinyFish Search":["sky","TinyFish Search"],"TinyFish Fetch: Google Careers":["peach","Google Careers · Fetch"],"TinyFish Agent: Workday":["lav","Workday · Agent"]};
@@ -97,7 +107,7 @@ document.addEventListener('click',e=>{if(!$('#menu').contains(e.target))$('#menu
 const ago=t=>{if(!t)return'';const s=(Date.now()/1000-t);return s<60?'just now':s<3600?Math.round(s/60)+' min ago':Math.round(s/3600)+' h ago'};
 const list=v=>v.split(',').map(x=>x.trim()).filter(Boolean);
 function prefs(){return{role:$('#role').value,locations:list($('#locs').value),keywords:list($('#kw').value),exclude:list($('#ex').value),
- job_type:$('#type .on').dataset.v,seniority:[...document.querySelectorAll('#sen .ck.on')].map(c=>c.dataset.v),needs_sponsorship:$('#visa').classList.contains('on'),use_agent:$('#agent').classList.contains('on')}}
+ job_type:$('#type .on').dataset.v,seniority:[...document.querySelectorAll('#sen .ck.on')].map(c=>c.dataset.v),needs_sponsorship:$('#visa').classList.contains('on'),use_agent:$('#agent').classList.contains('on'),my_skills:list($('#mysk').value),posted_within_days:+$('#win .on').dataset.v||null}}
 function skel(){$('#list').innerHTML=Array.from({length:4},()=>`<div class="skel"><div class="sk" style="width:45%;height:16px"></div><div class="sk" style="width:30%;margin-top:12px"></div><div class="sk" style="width:60%;margin-top:12px"></div></div>`).join('')}
 const STEPS=[["boards","Company boards"],["search","Search · discover"],["fetch","Fetch · read & verify"],["agent","Agent · Workday filters"],["dedupe","Dedupe & rank"]];
 function prog(state){$('#prog').hidden=false;$('#prog').innerHTML=STEPS.map(([k,l])=>`<span class="step ${state[k]||''}"><span class="pulse"></span>${l}</span>`).join('')}
@@ -113,13 +123,27 @@ function card(x){const sc=x.score,cl=sc>=85?'c-mint':sc>=70?'c-sky':'c-peach';
  <h3>${esc(x.title)}</h3><div class="muted sm">${esc(x.company)} · ${esc(x.location||'Location on page')}</div>
  <div class="meta"><span class="chip ${x.job_type=='internship'?'c-lav':'c-gray'}">${x.job_type=='internship'?'Internship':'Full-time'}</span>${x.job_type=='internship'?'':`<span class="chip c-gray">${esc(x.seniority)}</span>`}
  ${x.remote?'<span class="chip c-sky">Remote</span>':''}${x.new?'<span class="chip c-peach">New</span>':''}
- <span class="xs muted">${x.live?'✓ verified live '+ago(x.last_verified):'not yet verified'}</span></div></div>
- <a class="apply" href="${esc(x.url)}" target="_blank" rel="noopener">Apply ↗</a></div>
+ ${x.posted_days!=null?`<span class="xs muted">posted ${x.posted_days?x.posted_days+'d ago':'today'}</span>`:''}<span class="xs muted">${x.live?'✓ verified live '+ago(x.last_verified):'not yet verified'}</span></div></div>
+ <div style="display:flex;gap:8px;flex:none"><button class="btn ghost ${TR[x.key]?'saved':''}" onclick="save('${x.key}',this)">${TR[x.key]?'✓ '+TR[x.key]:'Save'}</button><a class="apply" href="${esc(x.url)}" target="_blank" rel="noopener">Apply ↗</a></div></div>
+ ${(x.skills||[]).length?`<div class="sk-row">${x.skills.slice(0,6).map(k=>`<span class="chip ${(x.missing||[]).includes(k)?'c-peach':'c-mint'}" style="font-weight:500" title="${(x.missing||[]).includes(k)?'not in your skills':'you have this'}">${esc(k)}</span>`).join('')}</div>`:''}
  <details><summary>Why this match</summary><div class="why">${why}
  <div class="r"><span class="pt">src</span><span>${srcs}${x.alt_urls?` <span class="xs muted">· also at ${x.alt_urls.map(u=>`<a href="${esc(u)}" target="_blank">${esc(new URL(u).host)}</a>`).join(', ')}</span>`:''}</span></div>
  <div class="r"><span class="pt">live</span><span class="muted">${esc(x.live_evidence)}</span></div>
  <div class="r"><span class="pt">AI</span><span><button class="btn sec xs" style="padding:4px 12px" onclick="explain('${x.key}',this)">Explain with Gemini</button></span></div></div></details></article>`}
-function render(){const q=$('#q').value.toLowerCase();let v=DATA.filter(x=>(!newOnly||x.new)&&(!q||(x.title+x.company+x.location).toLowerCase().includes(q)));
+let TR={};
+async function loadTrack(){const d=await (await fetch('/api/track')).json();TR={};d.items.forEach(i=>TR[i.key]=i.status);$('#tcount').textContent=d.items.length?`· ${d.items.length}`:'';
+ $('#board').innerHTML=d.statuses.map(st=>{const it=d.items.filter(i=>i.status==st);return `<div class="col"><h4>${st}<span class="muted">${it.length}</span></h4>${it.map(i=>`<div class="mini"><b>${esc(i.title)}</b><span class="muted">${esc(i.company)} · ${esc(i.location||'')}</span><br><a href="${esc(i.url)}" target="_blank" class="xs" style="color:var(--lav-i)">Open posting ↗</a>
+ <select onchange="move('${i.key}',this.value)">${d.statuses.concat(['remove']).map(o=>`<option ${o==st?'selected':''}>${o}</option>`).join('')}</select></div>`).join('')||'<div class="xs muted" style="padding:8px">Nothing here yet</div>'}</div>`}).join('')}
+async function move(k,st){await fetch('/api/track',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({key:k,status:st})});await loadTrack();render()}
+async function save(k,b){await move(k,TR[k]?'remove':'saved');toast(TR[k]?'Saved to tracker':'Removed from tracker')}
+document.querySelectorAll('#nav button').forEach(b=>b.addEventListener('click',()=>{$('#v-open').hidden=b.dataset.v!='open';$('#v-track').hidden=b.dataset.v!='track';if(b.dataset.v=='track')loadTrack()}));
+function pulseView(){const P=STATS.pulse;if(!P||!P.n){$('#pulse').hidden=true;return}$('#pulse').hidden=false;const mx=Math.max(1,...P.skill_demand.map(x=>x[1])),cm=Math.max(1,...P.cities.map(x=>x[1]));
+ $('#pulse').innerHTML=`<h2 style="margin-bottom:8px">Market pulse <span class="xs muted" style="font-weight:400">across your ${P.n} matches</span></h2><div class="pulse-grid">
+ <div><div class="xs muted">Most requested skills</div>${P.skill_demand.slice(0,8).map(([k,n])=>`<div class="hb"><span class="l">${esc(k)}</span><span class="t"><i style="width:${n/mx*100}%"></i></span><span class="n">${n}</span></div>`).join('')}</div>
+ <div><div class="xs muted">Your skill gap</div><div class="sk-row">${P.skill_gap.map(([k,n])=>`<span class="chip c-peach" style="font-weight:500">${esc(k)} · ${n}</span>`).join('')||'<span class="xs muted">No gaps found</span>'}</div>
+ <div class="xs muted" style="margin-top:16px">Top hiring companies</div><div class="sk-row">${P.companies.slice(0,6).map(([k,n])=>`<span class="chip c-gray" style="font-weight:500">${esc(k)} · ${n}</span>`).join('')}</div></div>
+ <div><div class="xs muted">Where the openings are</div>${P.cities.slice(0,6).map(([k,n])=>`<div class="hb"><span class="l" style="text-transform:capitalize">${esc(k)}</span><span class="t"><i style="width:${n/cm*100}%;background:#A9DCC4"></i></span><span class="n">${n}</span></div>`).join('')}</div></div>`}
+function render(){pulseView();const q=$('#q').value.toLowerCase();let v=DATA.filter(x=>(!newOnly||x.new)&&(!q||(x.title+x.company+x.location).toLowerCase().includes(q)));
  v.sort(sortBy=='new'?(a,b)=>(b.first_seen-a.first_seen)||(b.score-a.score):(a,b)=>b.score-a.score);statsView();$('#bar').hidden=!DATA.length;
  $('#list').innerHTML=v.length?v.map(card).join(''):DATA.length?`<div class="card empty"><div class="ic">⌕</div><b>No listings match this filter</b><div class="muted sm" style="margin-top:8px">Clear the filter or turn off “New only”.</div></div>`:
  `<div class="card empty"><div class="ic">○</div><b>Nothing matched your preferences</b><div class="muted sm" style="margin-top:8px">Try adding “Remote”, widening seniority, or choosing “Both” for type.</div></div>`}
@@ -143,5 +167,5 @@ $('#refresh').onclick=async()=>{const b=$('#refresh');b.disabled=true;b.textCont
  const t=setInterval(async()=>{const j=await (await fetch('/api/job/'+r.id)).json();if(j.done){clearInterval(t);b.disabled=false;b.textContent='↻ Refresh';const e=j.events.at(-1);toast(e.msg);await load()}},1500)};
 async function explain(k,btn){btn.disabled=true;btn.textContent='Thinking…';const r=await (await fetch('/api/explain/'+k,{method:'POST'})).json();
  btn.parentNode.innerHTML=`<span>${esc(r.summary)}${(r.tips||[]).map(t=>`<br>• ${esc(t)}`).join('')}</span>`}
-load();
+loadTrack().then(load);
 </script></body></html>

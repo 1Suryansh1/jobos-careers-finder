@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 from concurrent.futures import ThreadPoolExecutor
 from . import tf, sources as S, cache
 from .resolve import DEAD
+from . import insights as I
 
 DB = os.path.join(os.path.dirname(__file__), "..", "data", "listings.db")
 _l = threading.Lock()
@@ -105,6 +106,15 @@ def match(l, p):
         if k.lower() in t or k.lower() in d: score += 5; why.append(("+5", f"mentions '{k}'"))
     for k in p.get("exclude", []):
         if k.lower() in t: return None, f"excluded '{k}'"
+    win = p.get("posted_within_days")
+    pdays = I.posted_days(l.get("posted"))
+    if win and pdays is not None and pdays > win: return None, f"posted {int(pdays)}d ago > {win}d"
+    l["posted_days"] = None if pdays is None else int(pdays)
+    l["skills"] = I.skills_in(f"{l['title']} {l.get('desc','')}")
+    mine = {k.lower() for k in p.get("my_skills", [])}
+    have = [k for k in l["skills"] if k in mine]; l["missing"] = [k for k in l["skills"] if k not in mine][:6]
+    if have: score += min(15, 3 * len(have)); why.append((f"+{min(15,3*len(have))}", f"you have {', '.join(have[:5])}"))
+    if l["missing"] and mine: why.append(("+0", f"skills to brush up: {', '.join(l['missing'][:4])}"))
     score += 25 if loc_ok else 0
     if l["job_type"] == "internship" and jt == "internship": score += 10; why.append(("+10", "internship"))
     if p.get("needs_sponsorship") and not l["in_india"] and not l["remote"]:
@@ -203,14 +213,14 @@ def run(p, on, on_live, use_agent=True, max_verify=60, prev=None):
         if x["live"] and x["source"] == "TinyFish Search" and vv and vv[2]: x["title"] = re.sub(r"^Job Application for | at [^|]+$", "", vv[2]).strip() or x["title"]
         row = c.execute("select first_seen from listing where key=?", (x["key"],)).fetchone()
         x["first_seen"] = row[0] if row else now; x["new"] = (not row) or x["first_seen"] > prev
-        x["last_verified"] = now; x["sources"] = sorted(x["sources"]); x.pop("desc", None)
+        x["last_verified"] = now; x["sources"] = sorted(x["sources"]); x.pop("desc", None); x["city"] = city(x.get("location") or "")
         c.execute("replace into listing values(?,?,?,?,?,?)", (x["key"], json.dumps(x), x["first_seen"], now, now, int(bool(x["live"]))))
     out = [x for x in out if x["live"] is not False]
     dead = len(merged) - len(out)
     out.sort(key=lambda x: (-x["score"], not x["new"]))
     stats = {"raw": len(raw), "per_source": per_src, "url_duplicates": url_dupes, "after_url_dedupe": len(uniq), "matched": len(matched),
              "excluded": excluded, "canonical_duplicates": key_dupes, "final": len(out), "dead_filtered": dead,
-             "new_since_last_run": sum(x["new"] for x in out), "multi_source": sum(len(x["sources"]) > 1 for x in out), "seconds": round(time.time() - t0, 1)}
+             "new_since_last_run": sum(x["new"] for x in out), "pulse": I.pulse(out, p.get("my_skills", [])), "multi_source": sum(len(x["sources"]) > 1 for x in out), "seconds": round(time.time() - t0, 1)}
     rid = hashlib.md5(str(now).encode()).hexdigest()[:8]
     c.execute("insert into run values(?,?,?,?)", (rid, json.dumps(p), now, json.dumps(stats))); c.commit()
     return out, stats
@@ -231,3 +241,16 @@ def refresh(on):
         x["live"] = live; x["last_verified"] = now
         c.execute("update listing set data=?, last_verified=?, live=? where key=?", (json.dumps(x), now, int(live), x["key"]))
     c.commit(); return {"checked": len(rows), "closed": closed}
+
+STATUSES = ["saved", "applied", "interview", "offer", "rejected"]
+def track_set(key, status, item=None):
+    c = db(); c.execute("create table if not exists track(key text primary key, status text, ts real, data text)")
+    if status == "remove": c.execute("delete from track where key=?", (key,))
+    else:
+        row = c.execute("select data from track where key=?", (key,)).fetchone()
+        data = json.dumps(item) if item else (row[0] if row else "{}")
+        c.execute("replace into track values(?,?,?,?)", (key, status, time.time(), data))
+    c.commit()
+def track_all():
+    c = db(); c.execute("create table if not exists track(key text primary key, status text, ts real, data text)")
+    return [dict(json.loads(d), key=k, status=s, status_ts=t) for k, s, t, d in c.execute("select key,status,ts,data from track order by ts desc")]

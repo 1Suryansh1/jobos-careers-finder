@@ -18,6 +18,7 @@ STATE = {"last_prefs": None, "last_results": [], "last_stats": {}, "last_refresh
 class Prefs(BaseModel):
     role: str = "ML / SWE"; locations: list[str] = ["India", "Remote"]; keywords: list[str] = ["python"]; exclude: list[str] = []
     seniority: list[str] = ["intern", "entry"]; job_type: str = "internship"; needs_sponsorship: bool = False; use_agent: bool = True
+    my_skills: list[str] = ["python", "pytorch", "sql", "git"]; posted_within_days: int | None = None
 
 class Job:
     def __init__(s, kind): s.id = uuid.uuid4().hex[:8]; s.kind = kind; s.events = []; s.done = False; s.t0 = time.time(); s.result = None; s.lives = {}
@@ -86,7 +87,16 @@ def scheduler():
             p = dict(STATE["last_prefs"]); _find(j, p)   # Workday agent results cached 24h -> scheduled runs cost $0 in agent steps
 threading.Thread(target=scheduler, daemon=True).start()
 
-COLS = ["score", "new", "title", "company", "location", "job_type", "seniority", "url", "sources", "posted", "live_evidence", "last_verified"]
+class TrackReq(BaseModel): key: str; status: str
+@app.post("/api/track")
+def track(req: TrackReq):
+    if req.status not in finder.STATUSES + ["remove"]: raise HTTPException(400)
+    item = next((l for l in STATE["last_results"] if l["key"] == req.key), None)
+    finder.track_set(req.key, req.status, item); return {"ok": True}
+@app.get("/api/track")
+def tracked(): return {"items": finder.track_all(), "statuses": finder.STATUSES}
+
+COLS = ["score", "new", "title", "company", "location", "job_type", "seniority", "url", "sources", "posted", "posted_days", "skills", "missing", "live_evidence", "last_verified"]
 @app.get("/api/export.json")
 def export_json(): return Response(json.dumps(STATE["last_results"], indent=1, default=str), media_type="application/json",
                                    headers={"Content-Disposition": "attachment; filename=jobos_listings.json"})
