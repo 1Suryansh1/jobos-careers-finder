@@ -1,4 +1,27 @@
-# JobOS: verified job hunting on TinyFish
+# JobOS Careers Finder: current plan (TinyFish × DTU)
+
+**Status (Oct 2026):** the project moved from the original "verified job hunting + prefill" plan (kept below for history) to the DTU Careers Finder brief. What ships today:
+
+| Layer | What it does |
+|---|---|
+| Company boards | Greenhouse, Lever and Ashby public APIs (22 boards), refreshed through a cache |
+| TinyFish Search | Long-tail `site:` discovery on ATS domains, plus per-tenant Workday discovery for NVIDIA and Walmart |
+| TinyFish Fetch | Reads Google Careers. Verifies every non-API link (10 per call, `ttl=0`, one retry for thin pages). Reads the location from the page |
+| TinyFish Agent | Workday filtering only (keyword URL, location filter on cards, real link copied from each card). Every Agent link is checked by Fetch plus a title match. Cached 24 h, under about $0.40 per uncached search |
+| Matching | Deterministic score (title terms, location, keywords, skills, type, seniority, posted-within) with a "Why this match" breakdown. Gemini is used only for the optional "Explain" button |
+| Insights | Skill demand, skill gap, companies and cities (`backend/insights.py`, after job-market-intel, MIT) |
+| Tracker | SQLite `track` table, Saved → Applied → Interview → Offer / Rejected |
+| Freshness | `first_seen` / `last_verified`, "new since last run", Refresh, 3 h scheduler |
+
+**Next steps:**
+- More Workday tenants found automatically through Search.
+- Use the Agent's step screenshots to auto-diagnose empty runs.
+- TinyFish Monitor for jobs the user has saved.
+
+---
+
+## Original plan (history)
+
 
 **One line:** JobOS finds roles across the fragmented ATS web (Greenhouse, Lever, Ashby, Workday). It **proves each posting is still live**, scores fit with **quoted evidence**, and then **prefills the real application form in a live cloud browser, stopping before Submit**. Every fact shows its source, a confidence score and a cross-check.
 

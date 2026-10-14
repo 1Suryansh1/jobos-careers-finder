@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JobOS · Careers Finder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<style>[hidden]{display:none!important}
 :root{--bg:#FAFAF7;--card:#FFFFFF;--ink:#1F2430;--mute:#5B6475;--line:#ECEAF2;--lav:#EDE9FE;--lav-i:#5B47C7;--mint:#DDF6E8;--mint-i:#1D6B45;--peach:#FFE9DC;--peach-i:#A3461F;--sky:#E1F1FC;--sky-i:#1D5F92;--rose:#FDE7EC;--rose-i:#A3324F;
 --sh:0 1px 2px rgba(31,36,48,.04),0 4px 16px rgba(31,36,48,.05);--r:14px}
 *{box-sizing:border-box}html,body{margin:0}body{font:15px/1.5 Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
@@ -96,7 +96,7 @@ summary:before{content:"›";display:inline-block;margin-right:6px;transition:tr
 <div class="toast" id="toast"></div>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const SRC={"boards (ATS APIs)":["mint","Company boards"],"TinyFish Search":["sky","TinyFish Search"],"TinyFish Fetch: Google Careers":["peach","Google Careers · Fetch"],"TinyFish Agent: Workday":["lav","Workday · Agent"]};
+const SRC={"boards (ATS APIs)":["mint","Company boards"],"TinyFish Search":["sky","TinyFish Search"],"TinyFish Fetch: Google Careers":["peach","Google Careers · Fetch"],"TinyFish Agent: Workday":["lav","Workday · Agent"],"TinyFish Search+Fetch: Workday":["lav","Workday · Search+Fetch"]};
 let DATA=[],STATS={},sortBy='score',newOnly=false;
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2200)};
 document.querySelectorAll('.seg').forEach(s=>s.onclick=e=>{if(e.target.tagName!='BUTTON')return;s.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b==e.target));if(s.id=='sort'){sortBy=e.target.dataset.v;render()}});

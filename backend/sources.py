@@ -13,7 +13,7 @@ BOARDS = {  # company boards with India and/or intern roles (probed live)
  "ashby": ["sarvam", "atlan", "openai", "perplexity", "notion"]}
 WORKDAY = [  # (company, url) agent applies keyword + India filter
  ("NVIDIA", "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite"),
- ("Walmart Global Tech", "https://walmart.wd5.myworkdayjobs.com/WalmartExternal")]
+ ("Walmart Global Tech", "https://walmart.wd504.myworkdayjobs.com/WalmartExternal")]  # wd504, not wd5 (wd5 serves a maintenance page; seen in agent step screenshots)
 
 def L(**k): return {"type": "", "posted": None, "desc": "", **k}
 
@@ -99,8 +99,8 @@ def workday(company, url, prefs, on=None, on_live=None):
     from .finder import queries
     kw = "intern" if prefs.get("job_type") == "internship" else queries(prefs.get("role", ""), False)[0]
     loc = next((l for l in prefs.get("locations", []) if l.lower() != "remote"), "India")
-    url = f"{url}?q={kw} {loc}"
-    goal = (f"This Workday careers page already shows search results for '{kw} {loc}'. Wait for the job list to load. "
+    url = f"{url}?q={kw}"  # Workday free text does not match location ("intern India" -> 0 jobs); agent filters cards by location instead
+    goal = (f"This Workday careers page already shows search results for '{kw}'. Wait for the job list to load. "
             f"Keep only cards whose location is in {loc} (or Remote). "
             "For each kept card extract title, location, posted text and the job link exactly as the card's href attribute (never construct or guess a URL; omit the job if you cannot read its link). "
             "Do not click into jobs, do not apply, do not sign in. Return JSON.")
@@ -114,3 +114,42 @@ def workday(company, url, prefs, on=None, on_live=None):
               url=(j["url"] if j["url"].startswith("http") else base + j["url"] if j["url"].startswith("/job") else re.match(r"https://[^/]+", base).group(0) + j["url"]), ats="workday", run_id=r["run_id"]) for j in res.get("jobs", [])]
     on and on("agent", f"{company}: Agent applied filters -> {len(jobs)} openings in {r['ms']//1000}s, {len(r['steps'])} steps (~${r['usd_est']})")
     return jobs, r
+
+
+def wd_slug_loc(url):
+    """Workday job URLs carry the location as a path segment: /job/India-Pune/..., /job/IN-KA-BANGALORE-Home-Office/..."""
+    m = re.search(r"/job/([^/]+)/[^/]+_[A-Z]*R?-?\d", url, re.I)
+    if not m: return ""
+    seg = m.group(1).replace("-", " ")
+    if re.match(r"(?i)IN [A-Z]{2} ", seg): return seg.split()[2].title() + ", India"
+    if seg.lower().startswith("india "): return seg[6:].title() + ", India"
+    return seg.title()
+
+def workday_search(prefs, on=None):
+    """TinyFish Search finds individual Workday postings (no API, no agent spend); Fetch verifies them later in finder.verify."""
+    from .finder import queries
+    phr = queries(prefs.get("role", ""), prefs.get("job_type") == "internship")
+    loc = next((l for l in prefs.get("locations", []) if l.lower() != "remote"), "India")
+    out, seen = [], set()
+    for co, base in WORKDAY:
+        host = re.match(r"https://([^/]+)", base).group(1)
+        qs = [f"site:{host} {ph} {loc}" for ph in phr[:2]] + [f"{co} {phr[0]} {loc} myworkdayjobs"]
+        for q in qs:
+            c = cache.get("search", "q:" + q)
+            if c is None:
+                try: r = tf.search(q); c = r["results"]; cache.put("search", "q:" + q, c)
+                except Exception as e: on and on("error", f"search: {e}"); continue
+            n = 0
+            for x in c:
+                u = (x.get("url") or "").replace("http://", "https://")
+                if host.split(".")[0] + "." not in u or "/job/" not in u and "/details/" not in u: continue
+                u = u.replace("/details/", "/job/")
+                k = re.search(r"_(J?R-?\d+)", u); k = k.group(1) if k else u
+                if k in seen: continue
+                seen.add(k); n += 1
+                t = re.sub(r" - (Myworkdayjobs\.com|this page|Search for Jobs)$", "", x.get("title") or "").strip()
+                if not t or t.lower().startswith(("search for jobs", "sign in", "careers at")):  # generic SERP title -> use the URL slug
+                    t = re.sub(r"_J?R-?[\d-]+$", "", u.rstrip("/").split("/")[-1]).replace("--", " - ").replace("-", " ").strip()
+                out.append(L(title=t, company=co, location=wd_slug_loc(u), url=u, desc=x.get("snippet") or "", ats="workday", needs_verify=True))
+            on and on("search", f"Search '{q}': {n} {co} Workday postings")
+    return out

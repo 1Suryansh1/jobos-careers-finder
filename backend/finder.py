@@ -19,7 +19,7 @@ CITY = {"bangalore": "bengaluru", "gurgaon": "gurugram", "new delhi": "delhi", "
 SYN = {"ml": ["machine learning", "ml", "ai", "deep learning", "data scien", "applied scien", "research engineer", "llm", "computer vision", "nlp"],
        "swe": ["software", "swe", "sde", "developer", "backend", "frontend", "full stack", "fullstack", "engineer"],
        "data": ["data", "analytics", "analyst"], "product": ["product"], "design": ["design"]}
-INTERN = re.compile(r"\b(intern|internship|apprentice|trainee|co-?op|summer 20\d\d)\b", re.I)
+INTERN = re.compile(r"\b(intern|internships?|apprentice|trainee|co-?op|summer 20\d\d)\b", re.I)
 SENIOR = re.compile(r"\b(senior|sr\.?|staff|principal|lead|manager|director|head|vp|architect|ii+|iv)\b", re.I)
 ENTRY = re.compile(r"\b(new grad|graduate|junior|jr\.?|entry|associate|fresher|early career|university|campus|i)\b", re.I)
 NOSPONSOR = re.compile(r"(not (be )?able to sponsor|unable to sponsor|no (visa )?sponsorship|must be (legally )?authori[sz]ed to work|without (the need for )?sponsorship)", re.I)
@@ -56,7 +56,9 @@ def city(loc):
     for k, v in CITY.items(): c = c.replace(k, v)
     for x in INDIA[1:] + ["remote"]:
         if x in c: return x
-    return c.split(" ")[0] if c else ""
+    for x in WORLD:
+        if x in c: return x
+    return c.split(",")[0].strip() if c else ""
 def dkey(l): return hashlib.md5(f"{canon(l['company'])}|{canon_title(l['title'])}|{city(l['location'])}".encode()).hexdigest()[:12]
 
 def classify(l):
@@ -128,6 +130,7 @@ def collect(p, on, on_live, use_agent=True):
         fb = ex.submit(lambda: cache.get("search", "boards") or (lambda r: (cache.put("search", "boards", r), r)[1])(S.boards(on)))
         fs = ex.submit(S.search, p, on)
         fg = ex.submit(S.google_careers, p, on)
+        fws = ex.submit(S.workday_search, p, on)
         fw = []
         if use_agent:
             for co, url in S.WORKDAY:
@@ -139,7 +142,7 @@ def collect(p, on, on_live, use_agent=True):
                     except Exception as e: on("error", f"{co} agent: {str(e)[:100]}"); return []
                     cache.put("form", k, r); return r
                 fw.append(ex.submit(wd))
-        parts = {"boards (ATS APIs)": [dict(x) for x in fb.result()], "TinyFish Search": fs.result(), "TinyFish Fetch: Google Careers": fg.result()}
+        parts = {"boards (ATS APIs)": [dict(x) for x in fb.result()], "TinyFish Search": fs.result(), "TinyFish Fetch: Google Careers": fg.result(), "TinyFish Search+Fetch: Workday": fws.result()}
         parts["TinyFish Agent: Workday"] = [x for f in fw for x in f.result()]
     for src, l in parts.items():
         for x in l: x["source"] = src; jobs.append(x)
@@ -160,6 +163,11 @@ def verify(listings, on):
         return out
     with ThreadPoolExecutor(3) as ex:
         for o in ex.map(batch, [urls[i:i + 10] for i in range(0, len(urls), 10)]): res.update(o)
+        # JS-heavy pages (Workday) sometimes render empty on the first Fetch: retry those once (not ones with a dead-page phrase)
+        flaky = [u for u, r in res.items() if r[0] is not True and r[1] in ("live page", "empty_content", "target_unreachable") or (r[0] is None)]
+        for o in ex.map(batch, [flaky[i:i + 10] for i in range(0, len(flaky), 10)]):
+            res.update({u: r for u, r in o.items() if r[0] is not None or res[u][0] is None})
+        if flaky: on("fetch", f"Fetch re-checked {len(flaky)} thin/empty pages once")
     on("fetch", f"Fetch verified {len(urls)} non-API listings in {max(1,(len(urls)+9)//10)} batch calls")
     return res
 
@@ -210,6 +218,7 @@ def run(p, on, on_live, use_agent=True, max_verify=60, prev=None):
             okk = ("india" in locs and any(c in t for c in INDIA)) or ("remote" in locs and "remote" in t)
             if not okk: x["live"], x["live_evidence"] = False, "Fetch: page does not mention preferred location"
             else: x["location"] = next((c.title() for c in INDIA[1:] if c in t), "India" if "india" in t else "Remote")
+        if not x.get("location"): x["location"] = find_loc(f"{(vv[3] if vv else '')[:4000]} {x.get('desc','')} {x['url']}")
         if x["live"] and x["source"] == "TinyFish Search" and vv and vv[2]: x["title"] = re.sub(r"^Job Application for | at [^|]+$", "", vv[2]).strip() or x["title"]
         row = c.execute("select first_seen from listing where key=?", (x["key"],)).fetchone()
         x["first_seen"] = row[0] if row else now; x["new"] = (not row) or x["first_seen"] > prev
@@ -224,6 +233,22 @@ def run(p, on, on_live, use_agent=True, max_verify=60, prev=None):
     rid = hashlib.md5(str(now).encode()).hexdigest()[:8]
     c.execute("insert into run values(?,?,?,?)", (rid, json.dumps(p), now, json.dumps(stats))); c.commit()
     return out, stats
+
+WORLD = ["remote", "london", "singapore", "new york", "san francisco", "seattle", "austin", "boston", "chicago", "toronto", "berlin",
+         "amsterdam", "paris", "dublin", "tokyo", "sydney", "tel aviv", "zurich", "munich", "warsaw", "santa clara", "mountain view", "dubai"]
+def find_loc(text):
+    """Best-effort location from page text / snippet / URL slug. 'Location: X' style labels first, then known city names."""
+    from .sources import wd_slug_loc
+    t = text or ""
+    for u in re.findall(r"https://\S+", t):
+        s = wd_slug_loc(u)
+        if s: return s
+    m = re.search(r"(?im)^\s*(?:\*\*)?(?:job )?locations?(?:\*\*)?\s*[:|]?\s*(?:\*\*)?\s*\n?\s*([A-Z][^\n|]{2,60})", t)
+    if m and len(m.group(1).split()) <= 8: return m.group(1).strip(" *")
+    low = t.lower()
+    hits = [(low.find(c), c) for c in INDIA[1:] + WORLD if re.search(r"\b" + c + r"\b", low)]
+    if hits: c = min(hits)[1]; return CITY.get(c, c).title()
+    return "India" if re.search(r"\bindia\b", low) else ""
 
 def loc_unknown(x): return any(w[1].startswith("location to be confirmed") for w in x.get("why", []))
 
